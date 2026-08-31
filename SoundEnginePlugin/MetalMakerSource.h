@@ -28,6 +28,7 @@ the specific language governing permissions and limitations under the License.
 #define MetalMakerSource_H
 
 #include "MetalMakerSourceParams.h"
+#include "../thirdparty/dsp/Source/generators/WhiteNoise.h"
 
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
 
@@ -66,6 +67,8 @@ private:
     AK::IAkPluginMemAlloc* m_pAllocator;
     AK::IAkSourcePluginContext* m_pContext;
     AkFXDurationHandler m_durationHandler;
+    
+    sknight::generators::WhiteNoise white_noise;
 };
 
 #endif // MetalMakerSource_H

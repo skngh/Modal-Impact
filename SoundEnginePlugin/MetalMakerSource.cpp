@@ -59,6 +59,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     m_pContext = in_pContext;
 
     m_durationHandler.Setup(m_pParams->RTPC.fDuration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
+    white_noise.Init();
 
     return AK_Success;
 }
@@ -96,16 +97,10 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 
         uFramesProduced = 0;
         
-        float fScale = 2.0f / 0xffffffff;
-        int x1 = 0x67452301;
-        int x2 = 0xefcdab89;
-        
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
             // Generate output here
-            x1 ^= x2;
-            *pBuf++ = x2 * 0.5f;
-            x2 += x1;
+            *pBuf++ = white_noise.Process(*pBuf);
             ++uFramesProduced;
         }
     }

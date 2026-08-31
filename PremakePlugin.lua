@@ -59,6 +59,7 @@ Plugin.sdk.static.links = -- https://github.com/premake/premake-core/wiki/links
 Plugin.sdk.static.libsuffix = "Source"
 Plugin.sdk.static.libdirs = -- https://github.com/premake/premake-core/wiki/libdirs
 {
+    "../thirdparty/dsp"
 }
 Plugin.sdk.static.defines = -- https://github.com/premake/premake-core/wiki/defines
 {
@@ -120,7 +121,8 @@ Plugin.sdk.test = {}
 
 Plugin.sdk.test.includedirs =
 {
-    _CATCH2_DIR
+    _CATCH2_DIR,
+    "../thirdparty/dsp"
 }
 Plugin.sdk.test.files =
 {

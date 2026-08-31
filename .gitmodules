@@ -1,0 +1,3 @@
+[submodule "thirdparty/dsp"]
+	path = thirdparty/dsp
+	url = git@github.com:skngh/DSP-Library.git
