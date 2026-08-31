@@ -12,13 +12,11 @@
 *.tgz
 *.bzip
 *.bz2
-*.xz
 *.lzma
 *.cab
 
 # Packing-only formats
 *.iso
-*.tar
 
 # Package management formats
 *.dmg
