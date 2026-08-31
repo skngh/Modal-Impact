@@ -6,9 +6,6 @@ name: Manual workflow
 # or API.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 env:
   WWISE_WP_DIR: E:\AudioKinetic\Wwise_2025.1.10.9233\Scripts\Build\Plugins\wp.py

@@ -1,0 +1,127 @@
+# Builds MetalMaker for Mac (Sound Engine) and Windows (Authoring + runtime engine),
+# packages each platform, generates a Wwise Launcher-installable bundle, and
+# uploads it as an artifact. On a `v*` tag push, also attaches it to a GitHub Release.
+
+name: Package and Bundle MetalMaker
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write   # needed for the Release step
+
+env:
+  WWISE_WP_WIN: E:\AudioKinetic\Wwise_2025.1.10.9233\Scripts\Build\Plugins\wp.py
+  WWISE_WP_MAC: /Applications/Audiokinetic/Wwise_2025.1.10.9233/Scripts/Build/Plugins/wp.py
+  PLUGIN_VERSION: 2025.1.10.1
+
+jobs:
+  build-mac:
+    runs-on: [self-hosted, macOS, ARM64]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Premake Mac
+        run: python3 ${{ env.WWISE_WP_MAC }} premake Mac
+
+      - name: Build Mac
+        run: python3 ${{ env.WWISE_WP_MAC }} build Mac --toolchain-vers wwise-toolchain-single.txt -c Release
+
+      - name: Package Mac
+        run: python3 ${{ env.WWISE_WP_MAC }} package -v ${{ env.PLUGIN_VERSION }} Mac
+
+      - name: Upload Mac package
+        uses: actions/upload-artifact@v7
+        with:
+          name: package-mac
+          path: "*.tar.xz"
+          if-no-files-found: error
+
+  build-windows:
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Premake Authoring
+        run: python ${{ env.WWISE_WP_WIN }} premake Authoring -t vc170
+
+      - name: Premake Windows runtime
+        run: python ${{ env.WWISE_WP_WIN }} premake Windows_vc170 -t vc170
+
+      - name: Build Authoring
+        run: python ${{ env.WWISE_WP_WIN }} build Authoring -c Release -t vc170
+
+      - name: Build Windows runtime
+        run: python ${{ env.WWISE_WP_WIN }} build Windows_vc170 -c Release -t vc170
+
+      - name: Package Authoring
+        run: python ${{ env.WWISE_WP_WIN }} package -v ${{ env.PLUGIN_VERSION }} Authoring
+
+      - name: Package Windows runtime
+        run: python ${{ env.WWISE_WP_WIN }} package -v ${{ env.PLUGIN_VERSION }} Windows_vc170
+
+      - name: Upload Windows packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: package-windows
+          path: "*.tar.xz"
+          if-no-files-found: error
+
+  bundle:
+    needs: [build-mac, build-windows]
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - name: Download Mac package
+        uses: actions/download-artifact@v7
+        with:
+          name: package-mac
+          path: .
+
+      - name: Download Windows packages
+        uses: actions/download-artifact@v7
+        with:
+          name: package-windows
+          path: .
+
+      - name: Generate bundle
+        run: python ${{ env.WWISE_WP_WIN }} generate-bundle -v ${{ env.PLUGIN_VERSION }}
+
+      - name: Assemble Bundle folder
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path Bundle | Out-Null
+          Move-Item -Path *.tar.xz -Destination Bundle -Force
+          Move-Item -Path bundle.json -Destination Bundle -Force
+
+      - name: Zip bundle
+        shell: pwsh
+        run: Compress-Archive -Path Bundle\* -DestinationPath "MetalMaker-${{ env.PLUGIN_VERSION }}.zip" -Force
+
+      - name: Upload bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MetalMaker-bundle-${{ env.PLUGIN_VERSION }}
+          path: "MetalMaker-${{ env.PLUGIN_VERSION }}.zip"
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v3
+        with:
+          prerelease: true
+          files: "MetalMaker-${{ env.PLUGIN_VERSION }}.zip"
