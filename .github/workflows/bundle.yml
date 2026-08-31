@@ -63,7 +63,7 @@ jobs:
         run: python ${{ env.WWISE_WP_WIN }} build Authoring -c Release -t vc170
 
       - name: Build Windows runtime
-        run: python ${{ env.WWISE_WP_WIN }} build Windows_vc170 -c Release -t vc170
+        run: python ${{ env.WWISE_WP_WIN }} build Windows_vc170 -c Release -t vc170 -x x64
 
       - name: Package Authoring
         run: python ${{ env.WWISE_WP_WIN }} package -v ${{ env.PLUGIN_VERSION }} Authoring
