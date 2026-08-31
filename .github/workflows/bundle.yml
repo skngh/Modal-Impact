@@ -103,14 +103,14 @@ jobs:
         run: python ${{ env.WWISE_WP_WIN }} generate-bundle -v ${{ env.PLUGIN_VERSION }}
 
       - name: Assemble Bundle folder
-        shell: pwsh
+        shell: powershell
         run: |
           New-Item -ItemType Directory -Force -Path Bundle | Out-Null
           Move-Item -Path *.tar.xz -Destination Bundle -Force
           Move-Item -Path bundle.json -Destination Bundle -Force
 
       - name: Zip bundle
-        shell: pwsh
+        shell: powershell
         run: Compress-Archive -Path Bundle\* -DestinationPath "MetalMaker-${{ env.PLUGIN_VERSION }}.zip" -Force
 
       - name: Upload bundle artifact
