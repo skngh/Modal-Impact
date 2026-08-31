@@ -11,7 +11,8 @@ on:
       - main
 
 env:
-  WWISE_WP_DIR:
+  WWISE_WP_DIR: E:\AudioKinetic\Wwise_2025.1.10.9233\Scripts\Build\Plugins\wp.py
+  BUILD_DIR: E:\AudioKinetic\Wwise_2025.1.10.9233\Authoring\x64\Release\bin\Plugins
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -21,6 +22,33 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Runs a single command using the runners shell
-    - name: Premake
-      run: python3 ${{env.WWISE_DIR}} premake Authoring
+    - name: Checkout repo
+      uses: actions/checkout@v4
+      with:
+          submodules: recursive
+          
+    - name: Premake Authoring
+      run: python ${{env.WWISE_WP_DIR}} premake Authoring -t vc170
+
+    - name: Premake vc170
+      run: python ${{env.WWISE_WP_DIR}} premake Windows_vc170 -t vc170
+
+    - name: build Authoring
+      run: python ${{env.WWISE_WP_DIR}} build Authoring -c Release -t vc170
+
+  upload:
+    needs: premake-and-build
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+    - name: Upload dll
+      uses: actions/upload-artifact@v4
+      with:
+        name: MetalMaker.dll
+        path: ${{env.BUILD_DIR}}\MetalMaker.dll
+
+    - name: Upload xml
+      uses: actions/upload-artifact@v4
+      with:
+        name: MetalMaker.xml
+        path: ${{env.BUILD_DIR}}\MetalMaker.xml    
