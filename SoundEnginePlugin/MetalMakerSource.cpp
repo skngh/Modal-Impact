@@ -57,10 +57,15 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     m_pParams = (MetalMakerSourceParams*)in_pParams;
     m_pAllocator = in_pAllocator;
     m_pContext = in_pContext;
+    
+    sample_rate_ = in_rFormat.uSampleRate;
 
     m_durationHandler.Setup(m_pParams->RTPC.fDuration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     white_noise.Init();
-
+    
+    bandpass.Init(sample_rate_);
+    bandpass.SetParams(5000.0f, 100.0f);
+    
     return AK_Success;
 }
 
@@ -90,17 +95,18 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
 
-    AkUInt16 uFramesProduced;
     for (AkUInt32 i = 0; i < uNumChannels; ++i)
     {
         AkReal32* AK_RESTRICT pBuf = (AkReal32* AK_RESTRICT)out_pBuffer->GetChannel(i);
 
-        uFramesProduced = 0;
+        AkUInt16 uFramesProduced = 0;
         
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
-            // Generate output here
-            *pBuf++ = white_noise.Process(*pBuf);
+            float sig = white_noise.Process(*pBuf);
+            sig = bandpass.Process(sig);
+            
+            *pBuf++ = sig;
             ++uFramesProduced;
         }
     }

@@ -29,8 +29,11 @@ the specific language governing permissions and limitations under the License.
 
 #include "MetalMakerSourceParams.h"
 #include "../thirdparty/dsp/Source/generators/WhiteNoise.h"
+#include "../thirdparty/dsp/Source/filters/Biquad.h"
 
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
+
+using namespace sknight;
 
 /// See https://www.audiokinetic.com/library/edge/?source=SDK&id=soundengine__plugins__source.html
 /// for the documentation about source plug-ins
@@ -68,7 +71,10 @@ private:
     AK::IAkSourcePluginContext* m_pContext;
     AkFXDurationHandler m_durationHandler;
     
-    sknight::generators::WhiteNoise white_noise;
+    AkUInt16 sample_rate_;
+    
+    generators::WhiteNoise white_noise;
+    filters::Biquad bandpass;
 };
 
 #endif // MetalMakerSource_H
