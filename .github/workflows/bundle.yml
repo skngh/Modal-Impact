@@ -8,10 +8,10 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - 'v*'
+      - "v*"
 
 permissions:
-  contents: write   # needed for the Release step
+  contents: write # needed for the Release step
 
 env:
   WWISE_WP_WIN: E:\AudioKinetic\Wwise_2025.1.10.9233\Scripts\Build\Plugins\wp.py
@@ -112,7 +112,7 @@ jobs:
         run: Compress-Archive -Path Bundle\* -DestinationPath "MetalMaker-${{ env.PLUGIN_VERSION }}.zip" -Force
 
       - name: Upload bundle artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: MetalMaker-bundle-${{ env.PLUGIN_VERSION }}
           path: "MetalMaker-${{ env.PLUGIN_VERSION }}.zip"
