@@ -30,6 +30,7 @@ the specific language governing permissions and limitations under the License.
 #include "MetalMakerSourceParams.h"
 #include "../thirdparty/dsp/Source/generators/WhiteNoise.h"
 #include "../thirdparty/dsp/Source/filters/Biquad.h"
+#include "../thirdparty/dsp/Source/utilities/Utilities.h"
 
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
 
@@ -72,6 +73,8 @@ private:
     AkFXDurationHandler m_durationHandler;
     
     AkUInt16 sample_rate_;
+    AkReal32 last_frequency_ = -1.0f;
+    AkReal32 last_q_ = -1.0f;
     
     generators::WhiteNoise white_noise;
     filters::Biquad bandpass;
