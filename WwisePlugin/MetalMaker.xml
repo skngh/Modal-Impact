@@ -51,7 +51,7 @@ for the documentation about the plugin xml format
         </Restrictions>
       </Property>
       <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Center Frequency">
-        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMax="10" />
+        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMax="20000" />
         <DefaultValue>1000.0</DefaultValue>
         <AudioEnginePropertyID>1</AudioEnginePropertyID>
         <Restrictions>
@@ -64,7 +64,7 @@ for the documentation about the plugin xml format
         </Restrictions>
       </Property>
       <Property Name="Q" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Q">
-        <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="10" />
+        <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="500" />
         <DefaultValue>0.707</DefaultValue>
         <AudioEnginePropertyID>2</AudioEnginePropertyID>
         <Restrictions>
