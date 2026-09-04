@@ -91,8 +91,8 @@ AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
 void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 {
     m_durationHandler.SetDuration(m_pParams->RTPC.fDuration);
-    utilities::ValueChanged(m_pParams->RTPC.fFrequency, last_frequency_, [&](float v) { bandpass.SetFreq(v); });
-    utilities::ValueChanged(m_pParams->RTPC.fQ, last_q_, [&](float v) { bandpass.SetQ(v); });
+    utilities::ValueChanged(m_pParams->RTPC.fFrequency, last_frequency_, [&](float v) { bandpass.SetFreq(v); }, 1.0f);
+    utilities::ValueChanged(m_pParams->RTPC.fQ, last_q_, [&](float v) { bandpass.SetQ(v); }, 0.01f);
     m_durationHandler.ProduceBuffer(out_pBuffer);
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
