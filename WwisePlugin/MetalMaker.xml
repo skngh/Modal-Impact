@@ -64,7 +64,7 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Q" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Q">
+      <Property Name="Q" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Q" DisplayGroup="Modes">
         <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="500" />
         <DefaultValue>0.707</DefaultValue>
         <AudioEnginePropertyID>2</AudioEnginePropertyID>
