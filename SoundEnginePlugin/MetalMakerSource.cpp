@@ -61,8 +61,6 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     sample_rate_ = in_rFormat.uSampleRate;
     
     in_rFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
-
-    m_durationHandler.Setup(m_pParams->RTPC.fDuration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
     white_noise.Init();
     
@@ -83,8 +81,9 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
 
     modal_bank.Init(static_cast<float>(sample_rate_));
     
-    AkInt32 object_type = m_pParams->RTPC.fType;
-
+    AkInt32 object_type = m_pParams->NonRTPC.fType;
+    
+    float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
     {
         filters::BiquadParams filterParams;
@@ -92,8 +91,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filterParams.frequency_ = preset.filter_freqs_[i] * 1.0f;
         filterParams.gain_ = preset.filter_gain_[i];
         filterParams.t60_ = preset.filter_t60_[i] * 1.0f;
+        max_t60 = max_t60 > preset.filter_t60_[i] ? max_t60 : preset.filter_t60_[i]; // for calculating duration
         modal_bank.SetParamsT60(filterParams, i);
     }
+    
+    float envelope_duration = attack + decay + release;
+    
+    m_durationHandler.Setup(envelope_duration + max_t60, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
     return AK_Success;
 }
@@ -123,7 +127,6 @@ AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
 
 void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 {
-    m_durationHandler.SetDuration(m_pParams->RTPC.fDuration);
 //    utilities::ValueChanged(m_pParams->RTPC.fFrequency, last_frequency_, [&](float v) { bandpass.SetFreq(v); }, 1.0f);
 //    utilities::ValueChanged(m_pParams->RTPC.fQ, last_q_, [&](float v) { bandpass.SetQ(v); }, 0.01f);
     m_durationHandler.ProduceBuffer(out_pBuffer);

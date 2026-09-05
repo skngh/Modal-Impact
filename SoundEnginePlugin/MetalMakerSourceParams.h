@@ -32,22 +32,21 @@ the specific language governing permissions and limitations under the License.
 
 // Add parameters IDs here, those IDs should map to the AudioEnginePropertyID
 // attributes in the xml property definition.
-static const AkPluginParamID PARAM_DURATION_ID = 0;
-static const AkPluginParamID PARAM_TYPE_ID = 1;
-static const AkPluginParamID PARAM_ATTACK_ID = 2;
-static const AkPluginParamID PARAM_DECAY_ID = 3;
-static const AkPluginParamID PARAM_SUSTAIN_ID = 4;
-static const AkPluginParamID PARAM_RELEASE_ID = 5;
-static const AkUInt32 NUM_PARAMS = 6;
+static const AkPluginParamID PARAM_TYPE_ID = 0;
+static const AkPluginParamID PARAM_ATTACK_ID = 1;
+static const AkPluginParamID PARAM_DECAY_ID = 2;
+static const AkPluginParamID PARAM_SUSTAIN_ID = 3;
+static const AkPluginParamID PARAM_RELEASE_ID = 4;
+static const AkUInt32 NUM_PARAMS = 5;
 
 struct MetalMakerRTPCParams
 {
-    AkReal32 fDuration;
-    AkInt32 fType;
+    
 };
 
 struct MetalMakerNonRTPCParams
 {
+    AkInt32 fType;
     AkReal32 fAttack;
     AkReal32 fDecay;
     AkReal32 fSustain;

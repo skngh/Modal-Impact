@@ -37,23 +37,10 @@ for the documentation about the plugin xml format
     </PluginInfo>
     <Properties>
       <!-- Add your property definitions here -->
-      <Property Name="Duration" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Duration" DisplayGroup="Modes">
-        <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="10" />
-        <DefaultValue>5.0</DefaultValue>
-        <AudioEnginePropertyID>0</AudioEnginePropertyID>
-        <Restrictions>
-          <ValueRestriction>
-            <Range Type="Real32">
-              <Min>0.001</Min>
-              <Max>1000</Max>
-            </Range>
-          </ValueRestriction>
-        </Restrictions>
-      </Property>
       <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes"
           SupportRTPCType="Boolean">
           <DefaultValue>0</DefaultValue>
-          <AudioEnginePropertyID>1</AudioEnginePropertyID>
+          <AudioEnginePropertyID>0</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Enumeration Type="int32">
@@ -66,7 +53,7 @@ for the documentation about the plugin xml format
       <Property Name="Attack" Type="Real32" DisplayName="Attack" DisplayGroup="Envelope">
         <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
         <DefaultValue>0.0</DefaultValue>
-        <AudioEnginePropertyID>2</AudioEnginePropertyID>
+        <AudioEnginePropertyID>1</AudioEnginePropertyID>
         <Restrictions>
           <ValueRestriction>
             <Range Type="Real32">
@@ -79,7 +66,7 @@ for the documentation about the plugin xml format
       <Property Name="Decay" Type="Real32" DisplayName="Decay" DisplayGroup="Envelope">
         <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
         <DefaultValue>0.0</DefaultValue>
-        <AudioEnginePropertyID>3</AudioEnginePropertyID>
+        <AudioEnginePropertyID>2</AudioEnginePropertyID>
         <Restrictions>
           <ValueRestriction>
             <Range Type="Real32">
@@ -92,7 +79,7 @@ for the documentation about the plugin xml format
       <Property Name="Sustain" Type="Real32" DisplayName="Sustain" DisplayGroup="Envelope">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="1" />
           <DefaultValue>1.0</DefaultValue>
-          <AudioEnginePropertyID>4</AudioEnginePropertyID>
+          <AudioEnginePropertyID>3</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real32">
@@ -105,7 +92,7 @@ for the documentation about the plugin xml format
       <Property Name="Release" Type="Real32" DisplayName="Release" DisplayGroup="Envelope">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
           <DefaultValue>0.1</DefaultValue>
-          <AudioEnginePropertyID>5</AudioEnginePropertyID>
+          <AudioEnginePropertyID>4</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real32">

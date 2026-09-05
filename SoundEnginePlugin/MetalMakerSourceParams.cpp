@@ -53,7 +53,11 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
     if (in_ulBlockSize == 0)
     {
         // Initialize default parameters here
-        RTPC.fDuration = 0.0f;
+        NonRTPC.fType = ObjectTypes::PLATE;
+        NonRTPC.fAttack = 0.0f;
+        NonRTPC.fDecay = 0.0f;
+        NonRTPC.fSustain = 1.0f;
+        NonRTPC.fRelease = 0.1f;
         m_paramChangeHandler.SetAllParamChanges();
         return AK_Success;
     }
@@ -73,7 +77,11 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
     AkUInt8* pParamsBlock = (AkUInt8*)in_pParamsBlock;
 
     // Read bank data here
-    RTPC.fDuration = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fType = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fAttack = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fDecay = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fSustain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fRelease = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     CHECKBANKDATASIZE(in_ulBlockSize, eResult);
     m_paramChangeHandler.SetAllParamChanges();
 
@@ -87,12 +95,8 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
     // Handle parameter change here
     switch (in_paramID)
     {
-    case PARAM_DURATION_ID:
-        RTPC.fDuration = *((AkReal32*)in_pValue);
-        m_paramChangeHandler.SetParamChange(PARAM_DURATION_ID);
-        break;
     case PARAM_TYPE_ID:
-        RTPC.fType = *((AkInt32*)in_pValue);
+        NonRTPC.fType = *((AkInt32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_TYPE_ID);
         break;
     case PARAM_ATTACK_ID:
