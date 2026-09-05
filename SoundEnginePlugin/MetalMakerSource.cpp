@@ -66,25 +66,32 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     white_noise.Init();
     
+    float attack = m_pParams->RTPC.fAttack;
+    float decay = m_pParams->RTPC.fDecay;
+    float sustain = m_pParams->RTPC.fSustain;
+    float release = m_pParams->RTPC.fRelease;
 
     envelope.Init(static_cast<float>(sample_rate_));
     
-    envelope.SetParams(0.0f, 0.0f, 1.0f, 1.0f);
+    envelope.SetParams(attack, decay, sustain, release);
 
     lpf.Init(static_cast<float>(sample_rate_));
     
     lpf.SetCutoff(20000.0f);
 
-    distortion.SetGain (0.5f);
+    distortion.SetGain (0.1f);
 
     modal_bank.Init(static_cast<float>(sample_rate_));
+    
+    AkInt32 object_type = m_pParams->RTPC.fType;
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < kNumModes; ++i)
     {
         filters::BiquadParams filterParams;
-        filterParams.frequency_ = filterFreqs[i] * 1.0f;
-        filterParams.gain_ = filterGain[i];
-        filterParams.t60_ = filterT60[i] * 1.0f;
+        const auto& preset = kModalBanks[object_type];
+        filterParams.frequency_ = preset.filter_freqs_[i] * 1.0f;
+        filterParams.gain_ = preset.filter_gain_[i];
+        filterParams.t60_ = preset.filter_t60_[i] * 1.0f;
         modal_bank.SetParamsT60(filterParams, i);
     }
     

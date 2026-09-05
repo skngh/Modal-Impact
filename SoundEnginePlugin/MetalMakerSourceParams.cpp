@@ -91,17 +91,25 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         RTPC.fDuration = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_DURATION_ID);
         break;
-    case PARAM_FREQUENCY_ID:
-        RTPC.fFrequency = *((AkReal32*)in_pValue);
-        m_paramChangeHandler.SetParamChange(PARAM_FREQUENCY_ID);
-        break;
-    case PARAM_Q_ID:
-        RTPC.fQ = *((AkReal32*)in_pValue);
-        m_paramChangeHandler.SetParamChange(PARAM_Q_ID);
-        break;
     case PARAM_TYPE_ID:
         RTPC.fType = *((AkInt32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_TYPE_ID);
+        break;
+    case PARAM_ATTACK_ID:
+        RTPC.fType = *((AkInt32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_ATTACK_ID);
+        break;
+    case PARAM_DECAY_ID:
+        RTPC.fType = *((AkInt32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_DECAY_ID);
+        break;
+    case PARAM_SUSTAIN_ID:
+        RTPC.fType = *((AkInt32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_SUSTAIN_ID);
+        break;
+    case PARAM_RELEASE_ID:
+        RTPC.fType = *((AkInt32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_RELEASE_ID);
         break;
     default:
         eResult = AK_InvalidParameter;

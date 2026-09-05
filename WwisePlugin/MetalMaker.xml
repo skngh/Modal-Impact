@@ -50,33 +50,6 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive"
-          DisplayName="Center Frequency" DisplayGroup="Modes" DataMeaning="Frequency">
-        <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMax="20000" />
-        <DefaultValue>1000.0</DefaultValue>
-        <AudioEnginePropertyID>1</AudioEnginePropertyID>
-        <Restrictions>
-          <ValueRestriction>
-            <Range Type="Real32">
-              <Min>1.0</Min>
-              <Max>20000</Max>
-            </Range>
-          </ValueRestriction>
-        </Restrictions>
-      </Property>
-      <Property Name="Q" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Q" DisplayGroup="Modes">
-        <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="500" />
-        <DefaultValue>0.707</DefaultValue>
-        <AudioEnginePropertyID>2</AudioEnginePropertyID>
-        <Restrictions>
-          <ValueRestriction>
-            <Range Type="Real32">
-              <Min>0.1</Min>
-              <Max>500</Max>
-            </Range>
-          </ValueRestriction>
-        </Restrictions>
-      </Property>
       <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes"
           SupportRTPCType="Boolean">
           <DefaultValue>0</DefaultValue>
@@ -87,6 +60,57 @@ for the documentation about the plugin xml format
                 <Value DisplayName="Plate">0</Value>
                 <Value DisplayName="Small Pipe">1</Value>
               </Enumeration>
+            </ValueRestriction>
+          </Restrictions>
+      </Property>
+      <Property Name="Attack" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Attack" DisplayGroup="Envelope">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
+        <DefaultValue>0.0</DefaultValue>
+        <AudioEnginePropertyID>4</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+      </Property>
+      <Property Name="Decay" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Decay" DisplayGroup="Envelope">
+        <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
+        <DefaultValue>0.0</DefaultValue>
+        <AudioEnginePropertyID>5</AudioEnginePropertyID>
+        <Restrictions>
+          <ValueRestriction>
+            <Range Type="Real32">
+              <Min>0.0</Min>
+              <Max>5</Max>
+            </Range>
+          </ValueRestriction>
+        </Restrictions>
+        <Property Name="Sustain" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Sustain" DisplayGroup="Envelope">
+          <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="1" />
+          <DefaultValue>1.0</DefaultValue>
+          <AudioEnginePropertyID>6</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Range Type="Real32">
+                <Min>0.0</Min>
+                <Max>1.0</Max>
+              </Range>
+            </ValueRestriction>
+          </Restrictions>
+      </Property>
+        <Property Name="Release" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Release" DisplayGroup="Envelope">
+          <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
+          <DefaultValue>0.1</DefaultValue>
+          <AudioEnginePropertyID>7</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Range Type="Real32">
+                <Min>0.0</Min>
+                <Max>5</Max>
+              </Range>
             </ValueRestriction>
           </Restrictions>
       </Property>
