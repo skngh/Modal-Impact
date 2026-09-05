@@ -29,8 +29,8 @@ See https://www.audiokinetic.com/library/edge/?source=SDK&id=plugin__xml.html
 for the documentation about the plugin xml format
 -->
 <PluginModule>
-  <SourcePlugin Name="Metal Maker" CompanyID="64" PluginID="20572">
-    <PluginInfo>
+  <SourcePlugin Name="Metal Maker" CompanyID="64" PluginID="20572" DisplayName="Metal Maker">
+    <PluginInfo CanUnlink="true" MenuPath="00-Wwise">
       <PlatformSupport>
         <Platform Name="Any"></Platform>
       </PlatformSupport>
@@ -50,7 +50,8 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Center Frequency" DisplayGroup="Modes">
+      <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive"
+          DisplayName="Center Frequency" DisplayGroup="Modes" DataMeaning="Frequency">
         <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMax="20000" />
         <DefaultValue>1000.0</DefaultValue>
         <AudioEnginePropertyID>1</AudioEnginePropertyID>
@@ -76,7 +77,8 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes">
+      <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes"
+          SupportRTPCType="Boolean">
           <DefaultValue>0</DefaultValue>
           <AudioEnginePropertyID>3</AudioEnginePropertyID>
           <Restrictions>
