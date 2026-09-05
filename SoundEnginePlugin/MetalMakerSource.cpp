@@ -69,13 +69,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
 
     envelope.Init(static_cast<float>(sample_rate_));
     
-    envelope.SetParams(0.0f, 0.0f, 1.0f, 0.1f);
+    envelope.SetParams(0.0f, 0.0f, 1.0f, 1.0f);
 
     lpf.Init(static_cast<float>(sample_rate_));
     
     lpf.SetCutoff(20000.0f);
 
-    distortion.SetGain (0.2f);
+    distortion.SetGain (0.5f);
 
     modal_bank.Init(static_cast<float>(sample_rate_));
 
@@ -87,8 +87,6 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filterParams.t60_ = filterT60[i] * 1.0f;
         modal_bank.SetParamsT60(filterParams, i);
     }
-    
-    envelope.TriggerEnvelope();
     
     return AK_Success;
 }
@@ -124,6 +122,12 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
     m_durationHandler.ProduceBuffer(out_pBuffer);
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
+    
+    if(!has_triggered_)
+    {
+        envelope.TriggerEnvelope();
+        has_triggered_ = true;
+    }
 
     for (AkUInt32 i = 0; i < uNumChannels; ++i)
     {
@@ -134,7 +138,6 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
             float noise = white_noise.Process() * envelope.Process();
-            
             float sig = distortion.Process(modal_bank.Process(noise));
             
             *pBuf++ = sig;
