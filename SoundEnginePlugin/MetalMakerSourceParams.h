@@ -35,17 +35,25 @@ the specific language governing permissions and limitations under the License.
 static const AkPluginParamID PARAM_DURATION_ID = 0;
 static const AkPluginParamID PARAM_FREQUENCY_ID = 1;
 static const AkPluginParamID PARAM_Q_ID = 2;
-static const AkUInt32 NUM_PARAMS = 3;
+static const AkPluginParamID PARAM_TYPE_ID = 3;
+static const AkUInt32 NUM_PARAMS = 4;
 
 struct MetalMakerRTPCParams
 {
     AkReal32 fDuration;
     AkReal32 fFrequency;
     AkReal32 fQ;
+    AkInt32 fType;
 };
 
 struct MetalMakerNonRTPCParams
 {
+};
+
+enum ObjectTypes
+{
+    PLATE = 0,
+    SMALL_PIPE = 1,
 };
 
 struct MetalMakerSourceParams

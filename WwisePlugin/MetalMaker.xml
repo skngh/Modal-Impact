@@ -37,7 +37,7 @@ for the documentation about the plugin xml format
     </PluginInfo>
     <Properties>
       <!-- Add your property definitions here -->
-      <Property Name="Duration" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Duration">
+      <Property Name="Duration" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Duration" DisplayGroup="Modes">
         <UserInterface Step="0.1" Fine="0.001" Decimals="3" UIMax="10" />
         <DefaultValue>5.0</DefaultValue>
         <AudioEnginePropertyID>0</AudioEnginePropertyID>
@@ -50,7 +50,7 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Center Frequency">
+      <Property Name="Frequency" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Center Frequency" DisplayGroup="Modes">
         <UserInterface Step="0.5" Fine="0.1" Decimals="1" UIMax="20000" />
         <DefaultValue>1000.0</DefaultValue>
         <AudioEnginePropertyID>1</AudioEnginePropertyID>
@@ -75,6 +75,18 @@ for the documentation about the plugin xml format
             </Range>
           </ValueRestriction>
         </Restrictions>
+      </Property>
+      <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes">
+          <DefaultValue>0</DefaultValue>
+          <AudioEnginePropertyID>3</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Enumeration Type="int32">
+                <Value DisplayName="Plate">0</Value>
+                <Value DisplayName="Small Pipe">1</Value>
+              </Enumeration>
+            </ValueRestriction>
+          </Restrictions>
       </Property>
     </Properties>
   </SourcePlugin>

@@ -28,10 +28,7 @@ the specific language governing permissions and limitations under the License.
 #define MetalMakerSource_H
 
 #include "MetalMakerSourceParams.h"
-#include "../thirdparty/dsp/Source/generators/WhiteNoise.h"
-#include "../thirdparty/dsp/Source/filters/Biquad.h"
-#include "../thirdparty/dsp/Source/utilities/Utilities.h"
-
+#include "../thirdparty/dsp/Source/sknightdsp.h"
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
 
 using namespace sknight;
@@ -77,7 +74,8 @@ private:
     AkReal32 last_q_ = -1.0f;
     
     generators::WhiteNoise white_noise;
-    filters::Biquad bandpass;
+    utilities::ADSR adsr;
+    filters::ModalBank<15> modal_bank;
 };
 
 #endif // MetalMakerSource_H

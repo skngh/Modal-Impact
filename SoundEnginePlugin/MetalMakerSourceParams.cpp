@@ -99,6 +99,10 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         RTPC.fQ = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_Q_ID);
         break;
+    case PARAM_TYPE_ID:
+        RTPC.fType = *((AkInt32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_TYPE_ID);
+        break;
     default:
         eResult = AK_InvalidParameter;
         break;
