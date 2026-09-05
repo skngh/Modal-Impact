@@ -88,7 +88,8 @@ for the documentation about the plugin xml format
             </Range>
           </ValueRestriction>
         </Restrictions>
-        <Property Name="Sustain" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Sustain" DisplayGroup="Envelope">
+      </Property>
+      <Property Name="Sustain" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Sustain" DisplayGroup="Envelope">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="1" />
           <DefaultValue>1.0</DefaultValue>
           <AudioEnginePropertyID>6</AudioEnginePropertyID>
@@ -101,7 +102,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-        <Property Name="Release" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Release" DisplayGroup="Envelope">
+      <Property Name="Release" Type="Real32" SupportRTPCType="Exclusive" DisplayName="Release" DisplayGroup="Envelope">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
           <DefaultValue>0.1</DefaultValue>
           <AudioEnginePropertyID>7</AudioEnginePropertyID>
