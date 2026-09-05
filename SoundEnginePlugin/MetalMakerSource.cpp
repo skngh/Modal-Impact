@@ -63,8 +63,32 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     in_rFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
 
     m_durationHandler.Setup(m_pParams->RTPC.fDuration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
+    
     white_noise.Init();
     
+
+    envelope.Init(static_cast<float>(sample_rate_));
+    
+    envelope.SetParams(0.0f, 0.0f, 1.0f, 0.1f);
+
+    lpf.Init(static_cast<float>(sample_rate_));
+    
+    lpf.SetCutoff(20000.0f);
+
+    distortion.SetGain (0.2f);
+
+    modal_bank.Init(static_cast<float>(sample_rate_));
+
+    for (int i = 0; i < 10; ++i)
+    {
+        filters::BiquadParams filterParams;
+        filterParams.frequency_ = filterFreqs[i] * 1.0f;
+        filterParams.gain_ = filterGain[i];
+        filterParams.t60_ = filterT60[i] * 1.0f;
+        modal_bank.SetParamsT60(filterParams, i);
+    }
+    
+    envelope.TriggerEnvelope();
     
     return AK_Success;
 }
@@ -77,6 +101,10 @@ AKRESULT MetalMakerSource::Term(AK::IAkPluginMemAlloc* in_pAllocator)
 
 AKRESULT MetalMakerSource::Reset()
 {
+    white_noise.Reset();
+    envelope.Reset();
+    lpf.Reset();
+    
     return AK_Success;
 }
 
@@ -105,8 +133,9 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
-            float sig = white_noise.Process();
-//            sig = bandpass.Process(sig);
+            float noise = white_noise.Process() * envelope.Process();
+            
+            float sig = distortion.Process(modal_bank.Process(noise));
             
             *pBuf++ = sig;
             ++uFramesProduced;

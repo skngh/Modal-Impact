@@ -113,7 +113,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: MetalMaker-bundle-${{ env.PLUGIN_VERSION }}
-          path: "MetalMaker-${{ env.PLUGIN_VERSION }}.zip"
+          path: "Bundle/*"
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/v')

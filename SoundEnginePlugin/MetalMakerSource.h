@@ -30,6 +30,7 @@ the specific language governing permissions and limitations under the License.
 #include "MetalMakerSourceParams.h"
 #include "../thirdparty/dsp/Source/sknightdsp.h"
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
+#include "ModalValues.h"
 
 using namespace sknight;
 
@@ -73,9 +74,12 @@ private:
     AkReal32 last_frequency_ = -1.0f;
     AkReal32 last_q_ = -1.0f;
     
+    
+    utilities::ADSR envelope;
     generators::WhiteNoise white_noise;
-    utilities::ADSR adsr;
-    filters::ModalBank<15> modal_bank;
+    filters::ModalBank<kNumModes> modal_bank;
+    filters::OnePole lpf;
+    effects::SimpleDistortion distortion;
 };
 
 #endif // MetalMakerSource_H

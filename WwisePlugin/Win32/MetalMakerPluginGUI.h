@@ -5,15 +5,15 @@ released in source code form as part of the SDK installer package.
 Commercial License Usage
 
 Licensees holding valid commercial licenses to the AUDIOKINETIC Wwise Technology
-may use this file in accordance with the end user license agreement provided 
+may use this file in accordance with the end user license agreement provided
 with the software or, alternatively, in accordance with the terms contained in a
 written agreement between you and Audiokinetic Inc.
 
 Apache License Usage
 
-Alternatively, this file may be used under the Apache License, Version 2.0 (the 
-"Apache License"); you may not use this file except in compliance with the 
-Apache License. You may obtain a copy of the Apache License at 
+Alternatively, this file may be used under the Apache License, Version 2.0 (the
+"Apache License"); you may not use this file except in compliance with the
+Apache License. You may obtain a copy of the Apache License at
 http://www.apache.org/licenses/LICENSE-2.0.
 
 Unless required by applicable law or agreed to in writing, software distributed
@@ -28,10 +28,11 @@ the specific language governing permissions and limitations under the License.
 #include "../MetalMakerPlugin.h"
 
 class MetalMakerPluginGUI final
-	: public AK::Wwise::Plugin::PluginMFCWindows<>
-	, public AK::Wwise::Plugin::GUIWindows
+	: public AK::Wwise::Plugin::PluginMFCWindows<>,
+	  public AK::Wwise::Plugin::GUIWindows
 {
 public:
 	MetalMakerPluginGUI();
 
+	// virtual bool GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT & out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *& out_pTable) const override;
 };
