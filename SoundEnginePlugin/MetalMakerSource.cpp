@@ -66,10 +66,10 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     white_noise.Init();
     
-    float attack = m_pParams->RTPC.fAttack;
-    float decay = m_pParams->RTPC.fDecay;
-    float sustain = m_pParams->RTPC.fSustain;
-    float release = m_pParams->RTPC.fRelease;
+    float attack = m_pParams->NonRTPC.fAttack;
+    float decay = m_pParams->NonRTPC.fDecay;
+    float sustain = m_pParams->NonRTPC.fSustain;
+    float release = m_pParams->NonRTPC.fRelease;
 
     envelope.Init(static_cast<float>(sample_rate_));
     

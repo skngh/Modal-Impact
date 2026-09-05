@@ -96,19 +96,19 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         m_paramChangeHandler.SetParamChange(PARAM_TYPE_ID);
         break;
     case PARAM_ATTACK_ID:
-        RTPC.fType = *((AkReal32*)in_pValue);
+        RTPC.fAttack = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_ATTACK_ID);
         break;
     case PARAM_DECAY_ID:
-        RTPC.fType = *((AkReal32*)in_pValue);
+        RTPC.fDecay = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_DECAY_ID);
         break;
     case PARAM_SUSTAIN_ID:
-        RTPC.fType = *((AkReal32*)in_pValue);
+        RTPC.fSustain = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_SUSTAIN_ID);
         break;
     case PARAM_RELEASE_ID:
-        RTPC.fType = *((AkReal32*)in_pValue);
+        RTPC.fRelease = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_RELEASE_ID);
         break;
     default:
