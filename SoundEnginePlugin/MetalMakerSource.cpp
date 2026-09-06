@@ -71,18 +71,20 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     lpf.Init(static_cast<float>(sample_rate_));
     modal_bank.Init(static_cast<float>(sample_rate_));
     
-    float attack = m_pParams->NonRTPC.fAttack;
-    float decay = m_pParams->NonRTPC.fDecay;
-    float sustain = m_pParams->NonRTPC.fSustain;
-    float release = m_pParams->NonRTPC.fRelease;
-    float random_param = m_pParams->NonRTPC.fRandomness;
-    float transpose_amount = std::pow(2.0f, m_pParams->NonRTPC.fTranspose / 12.0f);
+    const float attack = m_pParams->NonRTPC.fAttack;
+    const float decay = m_pParams->NonRTPC.fDecay;
+    const float sustain = m_pParams->NonRTPC.fSustain;
+    const float release = m_pParams->NonRTPC.fRelease;
+    const float random_param = m_pParams->NonRTPC.fRandomness;
+    const float transpose = m_pParams->NonRTPC.fTranspose;
+    const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
+//    const float transpose_scale = transpose > 0.0f ? 1.0f - (transpose / 12.0f) : 1.0f;
     AkInt32 object_type = m_pParams->NonRTPC.fType;
     
     envelope.SetParams(attack, decay, sustain, release);
     lpf.SetCutoff(m_pParams->NonRTPC.fLPF);
     distortion.SetType(effects::SimpleDistortion::ClippingType::SoftClip);
-    distortion.SetGain (1.0f);
+    distortion.SetGain (0.4f);
     
     float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
@@ -90,14 +92,14 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filters::BiquadParams filterParams;
         const auto& preset = kModalBanks[object_type];
         
-        float random_val = 2.0f * dis(gen) - 1.0f;
+        const float random_val = 2.0f * dis(gen) - 1.0f;
         
         // plus or minus %
         constexpr float kFreqJitter = 0.75f;
         constexpr float kGainJitter = 0.40f;
         constexpr float kT60Jitter  = 0.60f;
         
-        float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
+        const float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
         
         filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
         filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param);
