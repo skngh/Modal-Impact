@@ -66,6 +66,12 @@ public:
     AkReal32 GetDuration() const override;
 
 private:
+    static constexpr float kPostGain = 0.5f; // separate from gain param
+
+    /// Pull the per-buffer RTPC values. Transpose and Length are not handled
+    /// here: they are latched in Init(), see the comment there.
+    void UpdateRTPCParams();
+    
     MetalMakerSourceParams* m_pParams;
     AK::IAkPluginMemAlloc* m_pAllocator;
     AK::IAkSourcePluginContext* m_pContext;
@@ -74,13 +80,13 @@ private:
     AkUInt32 sample_rate_;
     AkReal32 last_frequency_ = -1.0f;
     AkReal32 last_q_ = -1.0f;
+    AkReal32 gain_smoothed_ = 1.0f;
     bool has_triggered_ = false;
     
     utilities::ADSR envelope;
     generators::WhiteNoise white_noise;
     filters::ModalBank<kNumModes> modal_bank;
     filters::OnePole lpf;
-    effects::SimpleDistortion distortion;
 };
 
 #endif // MetalMakerSource_H

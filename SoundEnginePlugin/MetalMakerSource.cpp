@@ -66,26 +66,32 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     std::mt19937 gen(rd());
     std::uniform_real_distribution<float> dis(0.0f, 1.0f); // 1 is exclusive
     
+    // init effects
     white_noise.Init();
     envelope.Init(static_cast<float>(sample_rate_));
     lpf.Init(static_cast<float>(sample_rate_));
     modal_bank.Init(static_cast<float>(sample_rate_));
     
-    const float attack = m_pParams->NonRTPC.fAttack;
-    const float decay = m_pParams->NonRTPC.fDecay;
-    const float sustain = m_pParams->NonRTPC.fSustain;
-    const float release = m_pParams->NonRTPC.fRelease;
+    // grab params
+    const float attack = m_pParams->RTPC.fAttack;
+    const float decay = m_pParams->RTPC.fDecay;
+    const float sustain = m_pParams->RTPC.fSustain;
+    const float release = m_pParams->RTPC.fRelease;
     const float random_param = m_pParams->NonRTPC.fRandomness;
-    const float transpose = m_pParams->NonRTPC.fTranspose;
+    const float transpose = m_pParams->RTPC.fTranspose;
+    const float length_mult = m_pParams->RTPC.fLength;
+    gain_smoothed_ = m_pParams->RTPC.fGain;
+    AkInt32 object_type = m_pParams->NonRTPC.fType;
+ 
+    // convert semitones to transposition amount.
+    // Scale gain by transposition (higher freq Q's are much louder and need to be scaled down)
     const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
     const float transpose_gain_mult = 1.0f / transpose_amount;
-    AkInt32 object_type = m_pParams->NonRTPC.fType;
     
     envelope.SetParams(attack, decay, sustain, release);
-    lpf.SetCutoff(m_pParams->NonRTPC.fLPF);
-    distortion.SetType(effects::SimpleDistortion::ClippingType::SoftClip);
-    distortion.SetGain (0.4f);
+    lpf.SetCutoff(m_pParams->RTPC.fLPF);
     
+    // set modal bank values
     float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
     {
@@ -94,12 +100,12 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         
         const float random_val = 2.0f * dis(gen) - 1.0f;
         
-        // plus or minus %
+        // plus or minus % for randomness
         constexpr float kFreqJitter = 0.75f;
         constexpr float kGainJitter = 0.40f;
         constexpr float kT60Jitter  = 0.60f;
         
-        const float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
+        const float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param) * length_mult;
         
         filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
         filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param) * transpose_gain_mult;
@@ -150,22 +156,33 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         envelope.TriggerEnvelope();
         has_triggered_ = true;
     }
+    
+    UpdateRTPCParams();
+    
+    const AkUInt16 uNumFrames = out_pBuffer->uValidFrames;
 
     for (AkUInt32 i = 0; i < uNumChannels; ++i)
     {
         AkReal32* AK_RESTRICT pBuf = (AkReal32* AK_RESTRICT)out_pBuffer->GetChannel(i);
-
         AkUInt16 uFramesProduced = 0;
         
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
             float noise = lpf.Process(white_noise.Process()) * envelope.Process();
-            float sig = distortion.Process(modal_bank.Process(noise));
+            float sig = modal_bank.Process(noise) * kPostGain * gain_smoothed_;
             
             *pBuf++ = sig;
             ++uFramesProduced;
         }
     }
+}
+
+void MetalMakerSource::UpdateRTPCParams()
+{
+    lpf.SetCutoff(m_pParams->RTPC.fLPF);
+    
+    const float gain_lin_ = utilities::DbToLin(m_pParams->RTPC.fGain);
+    utilities::SmoothingOnePole(gain_smoothed_, gain_lin_, 0.001f);
 }
 
 AkReal32 MetalMakerSource::GetDuration() const

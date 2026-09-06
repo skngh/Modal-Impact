@@ -54,13 +54,15 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
     {
         // Initialize default parameters here
         NonRTPC.fType = ObjectTypes::PLATE;
-        NonRTPC.fAttack = 0.0f;
-        NonRTPC.fDecay = 0.0f;
-        NonRTPC.fSustain = 1.0f;
-        NonRTPC.fRelease = 0.1f;
-        NonRTPC.fLPF = 20000.0f;
+        RTPC.fAttack = 0.0f;
+        RTPC.fDecay = 0.0f;
+        RTPC.fSustain = 1.0f;
+        RTPC.fRelease = 0.1f;
+        RTPC.fLPF = 20000.0f;
         NonRTPC.fRandomness = 0.0f;
-        NonRTPC.fTranspose = 0.0f;
+        RTPC.fTranspose = 0.0f;
+        RTPC.fLength = 1.0f;
+        RTPC.fGain = -12.0f;
         m_paramChangeHandler.SetAllParamChanges();
         return AK_Success;
     }
@@ -81,13 +83,15 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
 
     // Read bank data here
     NonRTPC.fType = READBANKDATA(AkInt32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fAttack = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fDecay = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fSustain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fRelease = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fLPF = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fAttack = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fDecay = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fSustain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fRelease = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fLPF = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fRandomness = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
-    NonRTPC.fTranspose = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fTranspose = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fLength = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fGain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     CHECKBANKDATASIZE(in_ulBlockSize, eResult);
     m_paramChangeHandler.SetAllParamChanges();
 
@@ -106,23 +110,23 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         m_paramChangeHandler.SetParamChange(PARAM_TYPE_ID);
         break;
     case PARAM_ATTACK_ID:
-        NonRTPC.fAttack = *((AkReal32*)in_pValue);
+        RTPC.fAttack = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_ATTACK_ID);
         break;
     case PARAM_DECAY_ID:
-        NonRTPC.fDecay = *((AkReal32*)in_pValue);
+        RTPC.fDecay = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_DECAY_ID);
         break;
     case PARAM_SUSTAIN_ID:
-        NonRTPC.fSustain = *((AkReal32*)in_pValue);
+        RTPC.fSustain = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_SUSTAIN_ID);
         break;
     case PARAM_RELEASE_ID:
-        NonRTPC.fRelease = *((AkReal32*)in_pValue);
+        RTPC.fRelease = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_RELEASE_ID);
         break;
     case PARAM_LPF_ID:
-        NonRTPC.fLPF = *((AkReal32*)in_pValue);
+        RTPC.fLPF = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_LPF_ID);
         break;
     case PARAM_RANDOMNESS_ID:
@@ -130,8 +134,16 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         m_paramChangeHandler.SetParamChange(PARAM_RANDOMNESS_ID);
         break;
     case PARAM_TRANSPOSE_ID:
-        NonRTPC.fTranspose = *((AkReal32*)in_pValue);
+        RTPC.fTranspose = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_TRANSPOSE_ID);
+        break;
+    case PARAM_LENGTH_ID:
+        RTPC.fLength = *((AkReal32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_LENGTH_ID);
+        break;
+    case PARAM_GAIN_ID:
+        RTPC.fGain = *((AkReal32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_GAIN_ID);
         break;
     default:
         eResult = AK_InvalidParameter;
