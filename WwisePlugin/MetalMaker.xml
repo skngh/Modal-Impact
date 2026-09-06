@@ -45,6 +45,7 @@ for the documentation about the plugin xml format
               <Enumeration Type="int32">
                 <Value DisplayName="Hollow Bottle">0</Value>
                 <Value DisplayName="Sword">1</Value>
+                <Value DisplayName="Pipe">2</Value>
               </Enumeration>
             </ValueRestriction>
           </Restrictions>
@@ -102,13 +103,13 @@ for the documentation about the plugin xml format
           </Restrictions>
       </Property>
       <Property Name="LPF" Type="Real32" DisplayName="Low pass filter" DisplayGroup="Exciter" DataMeaning="Frequency" SupportRTPCType="Exclusive">
-          <UserInterface Step="1.0" Fine="0.1" Decimals="2" UIMax="20000" />
+          <UserInterface Decimals="0"/>
           <DefaultValue>20000</DefaultValue>
           <AudioEnginePropertyID>5</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real64">
-                <Min>50.0</Min>
+                <Min>20</Min>
                 <Max>20000</Max>
               </Range>
             </ValueRestriction>
@@ -154,7 +155,7 @@ for the documentation about the plugin xml format
           </Restrictions>
       </Property>
       <Property Name="Gain" Type="Real32" DisplayName="Gain" DisplayGroup="Modes" DataMeaning="Decibels" SupportRTPCType="Exclusive">
-          <UserInterface Fine="0.1" Decimals="1" UIMax="0" />
+          <UserInterface Fine="0.1" Decimals="1"/>
           <DefaultValue>-12</DefaultValue>
           <AudioEnginePropertyID>9</AudioEnginePropertyID>
           <Restrictions>

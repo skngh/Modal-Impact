@@ -66,6 +66,7 @@ enum ObjectTypes
 {
     HOLLOW_BOTTLE = 0,
     SWORD = 1,
+    PIPE = 2,
 };
 
 struct MetalMakerSourceParams
