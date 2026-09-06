@@ -53,7 +53,7 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
     if (in_ulBlockSize == 0)
     {
         // Initialize default parameters here
-        NonRTPC.fType = ObjectTypes::PLATE;
+        NonRTPC.fType = ObjectTypes::HOLLOW_BOTTLE;
         RTPC.fAttack = 0.0f;
         RTPC.fDecay = 0.0f;
         RTPC.fSustain = 1.0f;
