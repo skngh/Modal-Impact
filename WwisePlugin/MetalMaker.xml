@@ -128,14 +128,14 @@ for the documentation about the plugin xml format
           </Restrictions>
       </Property>
       <Property Name="Transpose" Type="Real32" DisplayName="Transpose" DisplayGroup="Modes">
-          <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="24" />
+          <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="12" />
           <DefaultValue>0.0</DefaultValue>
           <AudioEnginePropertyID>7</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real32">
-                <Min>-24</Min>
-                <Max>24</Max>
+                <Min>-12</Min>
+                <Max>12</Max>
               </Range>
             </ValueRestriction>
           </Restrictions>
