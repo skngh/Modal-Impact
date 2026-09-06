@@ -71,7 +71,7 @@ private:
     AK::IAkSourcePluginContext* m_pContext;
     AkFXDurationHandler m_durationHandler;
     
-    AkUInt16 sample_rate_;
+    AkUInt32 sample_rate_;
     AkReal32 last_frequency_ = -1.0f;
     AkReal32 last_q_ = -1.0f;
     bool has_triggered_ = false;

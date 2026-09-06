@@ -81,7 +81,8 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     envelope.SetParams(attack, decay, sustain, release);
     lpf.SetCutoff(m_pParams->NonRTPC.fLPF);
-    distortion.SetGain (0.1f);
+    distortion.SetType(effects::SimpleDistortion::ClippingType::SoftClip);
+    distortion.SetGain (1.0f);
     
     float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
@@ -89,9 +90,9 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filters::BiquadParams filterParams;
         const auto& preset = kModalBanks[object_type];
         
-//        float random_val = i == 0 ? 0.0f : 2.0f * dis(gen) - 1.0f;
         float random_val = 2.0f * dis(gen) - 1.0f;
         
+        // plus or minus %
         constexpr float kFreqJitter = 0.75f;
         constexpr float kGainJitter = 0.40f;
         constexpr float kT60Jitter  = 0.60f;
