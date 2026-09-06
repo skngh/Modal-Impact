@@ -43,8 +43,8 @@ for the documentation about the plugin xml format
           <Restrictions>
             <ValueRestriction>
               <Enumeration Type="int32">
-                <Value DisplayName="Plate">0</Value>
-                <Value DisplayName="Small Pipe">1</Value>
+                <Value DisplayName="Hollow Bottle">0</Value>
+                <Value DisplayName="Sword">1</Value>
               </Enumeration>
             </ValueRestriction>
           </Restrictions>

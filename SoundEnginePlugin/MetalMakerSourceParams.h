@@ -64,8 +64,8 @@ struct MetalMakerNonRTPCParams
 
 enum ObjectTypes
 {
-    PLATE = 0,
-    SMALL_PIPE = 1,
+    HOLLOW_BOTTLE = 0,
+    SWORD = 1,
 };
 
 struct MetalMakerSourceParams
