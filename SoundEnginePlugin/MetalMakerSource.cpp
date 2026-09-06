@@ -89,11 +89,12 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filters::BiquadParams filterParams;
         const auto& preset = kModalBanks[object_type];
         
-        float random_val = i == 0 ? 0.0f : 2.0f * dis(gen) - 1.0f;
+//        float random_val = i == 0 ? 0.0f : 2.0f * dis(gen) - 1.0f;
+        float random_val = 2.0f * dis(gen) - 1.0f;
         
-        constexpr float kFreqJitter = 0.45f;
+        constexpr float kFreqJitter = 0.75f;
         constexpr float kGainJitter = 0.40f;
-        constexpr float kT60Jitter  = 0.45f;
+        constexpr float kT60Jitter  = 0.60f;
         
         float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
         
@@ -122,6 +123,7 @@ AKRESULT MetalMakerSource::Reset()
     white_noise.Reset();
     envelope.Reset();
     lpf.Reset();
+    modal_bank.Reset();
     
     return AK_Success;
 }
