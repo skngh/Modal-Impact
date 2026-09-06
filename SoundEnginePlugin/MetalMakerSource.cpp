@@ -78,7 +78,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     const float random_param = m_pParams->NonRTPC.fRandomness;
     const float transpose = m_pParams->NonRTPC.fTranspose;
     const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
-//    const float transpose_scale = transpose > 0.0f ? 1.0f - (transpose / 12.0f) : 1.0f;
+    const float transpose_gain_mult = 1.0f / transpose_amount;
     AkInt32 object_type = m_pParams->NonRTPC.fType;
     
     envelope.SetParams(attack, decay, sustain, release);
@@ -102,7 +102,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         const float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
         
         filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
-        filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param);
+        filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param) * transpose_gain_mult;
         filterParams.t60_ = t60_final;
         max_t60 = max_t60 > t60_final ? max_t60 : t60_final; // for calculating duration
         
