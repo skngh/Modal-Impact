@@ -117,7 +117,7 @@ for the documentation about the plugin xml format
       <Property Name="Randomness" Type="Real32" DisplayName="Randomness" DisplayGroup="Modes">
           <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="1" />
           <DefaultValue>0.0</DefaultValue>
-          <AudioEnginePropertyID>7</AudioEnginePropertyID>
+          <AudioEnginePropertyID>6</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real32">
@@ -130,7 +130,7 @@ for the documentation about the plugin xml format
       <Property Name="Transpose" Type="Real32" DisplayName="Transpose" DisplayGroup="Modes">
           <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="24" />
           <DefaultValue>0.0</DefaultValue>
-          <AudioEnginePropertyID>8</AudioEnginePropertyID>
+          <AudioEnginePropertyID>7</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
               <Range Type="Real32">

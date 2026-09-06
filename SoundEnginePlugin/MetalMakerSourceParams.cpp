@@ -80,7 +80,7 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
     AkUInt8* pParamsBlock = (AkUInt8*)in_pParamsBlock;
 
     // Read bank data here
-    NonRTPC.fType = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fType = READBANKDATA(AkInt32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fAttack = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fDecay = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fSustain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);

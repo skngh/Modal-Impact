@@ -91,13 +91,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         
         float random_val = i == 0 ? 0.0f : 2.0f * dis(gen) - 1.0f;
         
-        constexpr float kFreqJitter = 0.25f;
+        constexpr float kFreqJitter = 0.45f;
         constexpr float kGainJitter = 0.40f;
-        constexpr float kT60Jitter  = 0.25f;
+        constexpr float kT60Jitter  = 0.45f;
         
         float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
         
-        filterParams.frequency_ = preset.filter_freqs_[i] * transpose_amount * (1.0f + kFreqJitter * random_val * random_param);
+        filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
         filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param);
         filterParams.t60_ = t60_final;
         max_t60 = max_t60 > t60_final ? max_t60 : t60_final; // for calculating duration
