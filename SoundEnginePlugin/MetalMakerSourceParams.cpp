@@ -58,6 +58,9 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
         NonRTPC.fDecay = 0.0f;
         NonRTPC.fSustain = 1.0f;
         NonRTPC.fRelease = 0.1f;
+        NonRTPC.fLPF = 20000.0f;
+        NonRTPC.fRandomness = 0.0f;
+        NonRTPC.fTranspose = 0.0f;
         m_paramChangeHandler.SetAllParamChanges();
         return AK_Success;
     }
@@ -82,6 +85,9 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
     NonRTPC.fDecay = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fSustain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     NonRTPC.fRelease = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fLPF = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fRandomness = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    NonRTPC.fTranspose = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     CHECKBANKDATASIZE(in_ulBlockSize, eResult);
     m_paramChangeHandler.SetAllParamChanges();
 
@@ -114,6 +120,18 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
     case PARAM_RELEASE_ID:
         NonRTPC.fRelease = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_RELEASE_ID);
+        break;
+    case PARAM_LPF_ID:
+        NonRTPC.fLPF = *((AkReal32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_LPF_ID);
+        break;
+    case PARAM_RANDOMNESS_ID:
+        NonRTPC.fRandomness = *((AkReal32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_RANDOMNESS_ID);
+        break;
+    case PARAM_TRANSPOSE_ID:
+        NonRTPC.fTranspose = *((AkReal32*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_TRANSPOSE_ID);
         break;
     default:
         eResult = AK_InvalidParameter;

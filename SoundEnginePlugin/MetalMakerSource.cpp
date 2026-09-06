@@ -62,41 +62,50 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     in_rFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
     
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<float> dis(0.0f, 1.0f); // 1 is exclusive
+    
     white_noise.Init();
+    envelope.Init(static_cast<float>(sample_rate_));
+    lpf.Init(static_cast<float>(sample_rate_));
+    modal_bank.Init(static_cast<float>(sample_rate_));
     
     float attack = m_pParams->NonRTPC.fAttack;
     float decay = m_pParams->NonRTPC.fDecay;
     float sustain = m_pParams->NonRTPC.fSustain;
     float release = m_pParams->NonRTPC.fRelease;
-
-    envelope.Init(static_cast<float>(sample_rate_));
+    float random_param = m_pParams->NonRTPC.fRandomness;
+    float transpose_amount = std::pow(2.0f, m_pParams->NonRTPC.fTranspose / 12.0f);
+    AkInt32 object_type = m_pParams->NonRTPC.fType;
     
     envelope.SetParams(attack, decay, sustain, release);
-
-    lpf.Init(static_cast<float>(sample_rate_));
-    
-    lpf.SetCutoff(20000.0f);
-
+    lpf.SetCutoff(m_pParams->NonRTPC.fLPF);
     distortion.SetGain (0.1f);
-
-    modal_bank.Init(static_cast<float>(sample_rate_));
-    
-    AkInt32 object_type = m_pParams->NonRTPC.fType;
     
     float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
     {
         filters::BiquadParams filterParams;
         const auto& preset = kModalBanks[object_type];
-        filterParams.frequency_ = preset.filter_freqs_[i] * 1.0f;
-        filterParams.gain_ = preset.filter_gain_[i];
-        filterParams.t60_ = preset.filter_t60_[i] * 1.0f;
-        max_t60 = max_t60 > preset.filter_t60_[i] ? max_t60 : preset.filter_t60_[i]; // for calculating duration
+        
+        float random_val = i == 0 ? 0.0f : 2.0f * dis(gen) - 1.0f;
+        
+        constexpr float kFreqJitter = 0.25f;
+        constexpr float kGainJitter = 0.40f;
+        constexpr float kT60Jitter  = 0.25f;
+        
+        float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param);
+        
+        filterParams.frequency_ = preset.filter_freqs_[i] * transpose_amount * (1.0f + kFreqJitter * random_val * random_param);
+        filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param);
+        filterParams.t60_ = t60_final;
+        max_t60 = max_t60 > t60_final ? max_t60 : t60_final; // for calculating duration
+        
         modal_bank.SetParamsT60(filterParams, i);
     }
     
     float envelope_duration = attack + decay + release;
-    
     m_durationHandler.Setup(envelope_duration + max_t60, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
     return AK_Success;
@@ -127,8 +136,6 @@ AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
 
 void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 {
-//    utilities::ValueChanged(m_pParams->RTPC.fFrequency, last_frequency_, [&](float v) { bandpass.SetFreq(v); }, 1.0f);
-//    utilities::ValueChanged(m_pParams->RTPC.fQ, last_q_, [&](float v) { bandpass.SetQ(v); }, 0.01f);
     m_durationHandler.ProduceBuffer(out_pBuffer);
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
@@ -147,7 +154,7 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
-            float noise = white_noise.Process() * envelope.Process();
+            float noise = lpf.Process(white_noise.Process()) * envelope.Process();
             float sig = distortion.Process(modal_bank.Process(noise));
             
             *pBuf++ = sig;

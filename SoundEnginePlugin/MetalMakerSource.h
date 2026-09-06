@@ -27,9 +27,10 @@ the specific language governing permissions and limitations under the License.
 #ifndef MetalMakerSource_H
 #define MetalMakerSource_H
 
+#include <random>
 #include "MetalMakerSourceParams.h"
-#include "../thirdparty/dsp/Source/sknightdsp.h"
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
+#include "../thirdparty/dsp/Source/sknightdsp.h"
 #include "ModalValues.h"
 
 using namespace sknight;

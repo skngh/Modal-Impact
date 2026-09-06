@@ -37,7 +37,10 @@ static const AkPluginParamID PARAM_ATTACK_ID = 1;
 static const AkPluginParamID PARAM_DECAY_ID = 2;
 static const AkPluginParamID PARAM_SUSTAIN_ID = 3;
 static const AkPluginParamID PARAM_RELEASE_ID = 4;
-static const AkUInt32 NUM_PARAMS = 5;
+static const AkPluginParamID PARAM_LPF_ID = 5;
+static const AkPluginParamID PARAM_RANDOMNESS_ID = 6;
+static const AkPluginParamID PARAM_TRANSPOSE_ID = 7;
+static const AkUInt32 NUM_PARAMS = 8;
 
 struct MetalMakerRTPCParams
 {
@@ -51,6 +54,9 @@ struct MetalMakerNonRTPCParams
     AkReal32 fDecay;
     AkReal32 fSustain;
     AkReal32 fRelease;
+    AkReal32 fLPF;
+    AkReal32 fRandomness;
+    AkReal32 fTranspose;
 };
 
 enum ObjectTypes

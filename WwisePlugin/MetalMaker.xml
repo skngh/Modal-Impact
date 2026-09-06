@@ -37,8 +37,7 @@ for the documentation about the plugin xml format
     </PluginInfo>
     <Properties>
       <!-- Add your property definitions here -->
-      <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes"
-          SupportRTPCType="Boolean">
+      <Property Name="ObjectType" Type="int32" DisplayName="Object Type" DisplayGroup="Modes">
           <DefaultValue>0</DefaultValue>
           <AudioEnginePropertyID>0</AudioEnginePropertyID>
           <Restrictions>
@@ -98,6 +97,45 @@ for the documentation about the plugin xml format
               <Range Type="Real32">
                 <Min>0.0</Min>
                 <Max>5</Max>
+              </Range>
+            </ValueRestriction>
+          </Restrictions>
+      </Property>
+      <Property Name="LPF" Type="Real32" DisplayName="Low pass filter" DisplayGroup="Exciter" DataMeaning="Frequency">
+          <UserInterface Step="1.0" Fine="0.1" Decimals="2" UIMax="20000" />
+          <DefaultValue>20000</DefaultValue>
+          <AudioEnginePropertyID>5</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Range Type="Real32">
+                <Min>50.0</Min>
+                <Max>20000</Max>
+              </Range>
+            </ValueRestriction>
+          </Restrictions>
+      </Property>
+      <Property Name="Randomness" Type="Real32" DisplayName="Randomness" DisplayGroup="Modes">
+          <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="1" />
+          <DefaultValue>0.0</DefaultValue>
+          <AudioEnginePropertyID>7</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Range Type="Real32">
+                <Min>0.0</Min>
+                <Max>1.0</Max>
+              </Range>
+            </ValueRestriction>
+          </Restrictions>
+      </Property>
+      <Property Name="Transpose" Type="Real32" DisplayName="Transpose" DisplayGroup="Modes">
+          <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="24" />
+          <DefaultValue>0.0</DefaultValue>
+          <AudioEnginePropertyID>8</AudioEnginePropertyID>
+          <Restrictions>
+            <ValueRestriction>
+              <Range Type="Real32">
+                <Min>-24</Min>
+                <Max>24</Max>
               </Range>
             </ValueRestriction>
           </Restrictions>
