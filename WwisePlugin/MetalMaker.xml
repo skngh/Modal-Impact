@@ -55,7 +55,7 @@ for the documentation about the plugin xml format
         <AudioEnginePropertyID>1</AudioEnginePropertyID>
         <Restrictions>
           <ValueRestriction>
-            <Range Type="Real32">
+            <Range Type="Real64">
               <Min>0.0</Min>
               <Max>5</Max>
             </Range>
@@ -68,7 +68,7 @@ for the documentation about the plugin xml format
         <AudioEnginePropertyID>2</AudioEnginePropertyID>
         <Restrictions>
           <ValueRestriction>
-            <Range Type="Real32">
+            <Range Type="Real64">
               <Min>0.0</Min>
               <Max>5</Max>
             </Range>
@@ -81,7 +81,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>3</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>0.0</Min>
                 <Max>1.0</Max>
               </Range>
@@ -94,7 +94,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>4</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>0.0</Min>
                 <Max>5</Max>
               </Range>
@@ -107,7 +107,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>5</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>50.0</Min>
                 <Max>20000</Max>
               </Range>
@@ -120,7 +120,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>6</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>0.0</Min>
                 <Max>1.0</Max>
               </Range>
@@ -133,7 +133,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>7</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>-12</Min>
                 <Max>12</Max>
               </Range>
@@ -146,7 +146,7 @@ for the documentation about the plugin xml format
           <AudioEnginePropertyID>8</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
+              <Range Type="Real64">
                 <Min>0.1</Min>
                 <Max>2</Max>
               </Range>
@@ -154,13 +154,13 @@ for the documentation about the plugin xml format
           </Restrictions>
       </Property>
       <Property Name="Gain" Type="Real32" DisplayName="Gain" DisplayGroup="Modes" DataMeaning="Decibels" SupportRTPCType="Exclusive">
-          <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="0" />
+          <UserInterface Fine="0.1" Decimals="1" UIMax="0" />
           <DefaultValue>-12</DefaultValue>
           <AudioEnginePropertyID>9</AudioEnginePropertyID>
           <Restrictions>
             <ValueRestriction>
-              <Range Type="Real32">
-                <Min>-24</Min>
+              <Range Type="Real64">
+                <Min>-96.3</Min>
                 <Max>0</Max>
               </Range>
             </ValueRestriction>

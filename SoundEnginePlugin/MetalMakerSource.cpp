@@ -80,7 +80,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     const float random_param = m_pParams->NonRTPC.fRandomness;
     const float transpose = m_pParams->RTPC.fTranspose;
     const float length_mult = m_pParams->RTPC.fLength;
-    gain_smoothed_ = m_pParams->RTPC.fGain;
+    gain_smoothed_ = utilities::DbToLin(m_pParams->RTPC.fGain);
     AkInt32 object_type = m_pParams->NonRTPC.fType;
  
     // convert semitones to transposition amount.
