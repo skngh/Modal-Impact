@@ -81,6 +81,7 @@ private:
     AkReal32 last_frequency_ = -1.0f;
     AkReal32 last_q_ = -1.0f;
     AkReal32 gain_smoothed_ = 1.0f;
+    AkReal32 gain_target_ = 1.0f;
     bool has_triggered_ = false;
     
     utilities::ADSR envelope;

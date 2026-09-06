@@ -168,6 +168,8 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         
         while (uFramesProduced < out_pBuffer->uValidFrames)
         {
+            utilities::SmoothingOnePole(gain_smoothed_, gain_target_, 0.001f);
+            
             float noise = lpf.Process(white_noise.Process()) * envelope.Process();
             float sig = modal_bank.Process(noise) * kPostGain * gain_smoothed_;
             
@@ -180,9 +182,7 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 void MetalMakerSource::UpdateRTPCParams()
 {
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
-    
-    const float gain_lin_ = utilities::DbToLin(m_pParams->RTPC.fGain);
-    utilities::SmoothingOnePole(gain_smoothed_, gain_lin_, 0.001f);
+    gain_target_ = utilities::DbToLin(m_pParams->RTPC.fGain);
 }
 
 AkReal32 MetalMakerSource::GetDuration() const
