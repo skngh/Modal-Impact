@@ -80,7 +80,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     const float random_param = m_pParams->NonRTPC.fRandomness;
     const float transpose = m_pParams->RTPC.fTranspose;
     const float length_mult = m_pParams->RTPC.fLength;
-    loop_ = m_pParams->RTPC.fLoop;
+    loop_ = m_pParams->RTPC.fLoop != 0.0f;
     gain_smoothed_ = utilities::DbToLin(m_pParams->RTPC.fGain);
     AkInt32 object_type = m_pParams->NonRTPC.fType;
  
@@ -115,6 +115,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         modal_bank.SetParamsT60(filterParams, i);
     }
     
+    // calculate duration + looping logic
     float duration = attack + decay + release + max_t60_;
     m_durationHandler.Setup(loop_ ? 0 : duration, loop_ ? 0 : in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
@@ -133,6 +134,9 @@ AKRESULT MetalMakerSource::Reset()
     envelope.Reset();
     lpf.Reset();
     modal_bank.Reset();
+    has_triggered_ = false;
+    release_triggered_ = false;
+    last_loop_value_ = false;
     
     return AK_Success;
 }
@@ -157,10 +161,12 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         has_triggered_ = true;
     }
     
-    if(last_loop_value_ != loop_ && loop_ && !release_triggered_)
+    if(last_loop_value_ != loop_ && !loop_ && !release_triggered_)
     {
         envelope.TriggerRelease();
         m_durationHandler.SetDuration(m_pParams->RTPC.fRelease + max_t60_);
+        m_durationHandler.SetLooping(1);
+        m_durationHandler.Reset();
         release_triggered_ = true;
     }
     

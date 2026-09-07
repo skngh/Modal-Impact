@@ -55,7 +55,7 @@ struct MetalMakerRTPCParams
     AkReal32 fTranspose;
     AkReal32 fLength;
     AkReal32 fGain;
-    bool fLoop;
+    AkReal32 fLoop;
 };
 
 struct MetalMakerNonRTPCParams

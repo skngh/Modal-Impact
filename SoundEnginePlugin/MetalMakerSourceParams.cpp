@@ -148,7 +148,7 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
         m_paramChangeHandler.SetParamChange(PARAM_GAIN_ID);
         break;
     case PARAM_LOOP_ID:
-        RTPC.fGain = *((bool*)in_pValue);
+        RTPC.fLoop = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_LOOP_ID);
         break;
     default:
