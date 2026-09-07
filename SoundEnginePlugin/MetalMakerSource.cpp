@@ -137,7 +137,8 @@ AKRESULT MetalMakerSource::Reset()
     has_triggered_ = false;
     release_triggered_ = false;
     last_loop_value_ = false;
-    
+    elapsed_frames_ = 0;
+
     return AK_Success;
 }
 
@@ -152,6 +153,7 @@ AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
 void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 {
     m_durationHandler.ProduceBuffer(out_pBuffer);
+    elapsed_frames_ += out_pBuffer->uValidFrames;
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
     
@@ -166,9 +168,8 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
     if(last_loop_value_ != loop_ && !loop_ && !release_triggered_)
     {
         envelope.TriggerRelease();
-        m_durationHandler.SetDuration(m_pParams->RTPC.fRelease + max_t60_);
+        m_durationHandler.SetDuration(static_cast<AkReal32>(elapsed_frames_) / static_cast<AkReal32>(sample_rate_) + m_pParams->RTPC.fRelease + max_t60_);
         m_durationHandler.SetLooping(1);
-//        m_durationHandler.Reset();
         release_triggered_ = true;
     }
     

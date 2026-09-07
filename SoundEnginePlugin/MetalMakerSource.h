@@ -83,6 +83,7 @@ private:
     AkReal32 gain_smoothed_ = 1.0f;
     AkReal32 gain_target_ = 1.0f;
     float max_t60_ = 0.0f;
+    AkUInt32 elapsed_frames_ = 0;
     bool has_triggered_ = false;
     bool loop_ = false;
     bool last_loop_value_ = false;
