@@ -155,6 +155,8 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
 
     const AkUInt32 uNumChannels = out_pBuffer->NumChannels();
     
+    UpdateRTPCParams();
+    
     if(!has_triggered_)
     {
         envelope.TriggerEnvelope(loop_);
@@ -170,7 +172,6 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         release_triggered_ = true;
     }
     
-    UpdateRTPCParams();
     
     const AkUInt16 uNumFrames = out_pBuffer->uValidFrames;
 
