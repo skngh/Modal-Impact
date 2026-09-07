@@ -116,7 +116,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     }
     
     float duration = attack + decay + release + max_t60_;
-    m_durationHandler.Setup(loop_ ? 0 : duration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
+    m_durationHandler.Setup(loop_ ? 0 : duration, loop_ ? 0 : in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
     return AK_Success;
 }
