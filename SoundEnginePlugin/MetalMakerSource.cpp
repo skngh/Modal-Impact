@@ -168,7 +168,7 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         envelope.TriggerRelease();
         m_durationHandler.SetDuration(m_pParams->RTPC.fRelease + max_t60_);
         m_durationHandler.SetLooping(1);
-        m_durationHandler.Reset();
+//        m_durationHandler.Reset();
         release_triggered_ = true;
     }
     
