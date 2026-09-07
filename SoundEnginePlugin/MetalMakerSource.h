@@ -87,6 +87,7 @@ private:
     bool loop_ = false;
     bool last_loop_value_ = false;
     bool release_triggered_ = false;
+    float preset_post_gain_ = 1.0f;
     
     utilities::ADSR envelope;
     generators::WhiteNoise white_noise;

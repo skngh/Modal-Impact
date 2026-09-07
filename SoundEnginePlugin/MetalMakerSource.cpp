@@ -92,12 +92,12 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     envelope.SetParams(attack, decay, sustain, release);
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
     
+    filters::BiquadParams filterParams;
+    const auto& preset = kModalBanks[object_type];
+    preset_post_gain_ = preset.post_gain_;
     // set modal bank values
     for (int i = 0; i < kNumModes; ++i)
     {
-        filters::BiquadParams filterParams;
-        const auto& preset = kModalBanks[object_type];
-        
         const float random_val = 2.0f * dis(gen) - 1.0f;
         
         // plus or minus % for randomness
@@ -185,7 +185,7 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
             utilities::SmoothingOnePole(gain_smoothed_, gain_target_, 0.001f);
             
             float noise = lpf.Process(white_noise.Process()) * envelope.Process();
-            float sig = modal_bank.Process(noise) * kPostGain * gain_smoothed_;
+            float sig = modal_bank.Process(noise) * kPostGain * gain_smoothed_ * preset_post_gain_;
             
             *pBuf++ = sig;
             ++uFramesProduced;
