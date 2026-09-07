@@ -42,7 +42,8 @@ static const AkPluginParamID PARAM_RANDOMNESS_ID = 6;
 static const AkPluginParamID PARAM_TRANSPOSE_ID = 7;
 static const AkPluginParamID PARAM_LENGTH_ID = 8;
 static const AkPluginParamID PARAM_GAIN_ID = 9;
-static const AkUInt32 NUM_PARAMS = 10;
+static const AkPluginParamID PARAM_LOOP_ID = 10;
+static const AkUInt32 NUM_PARAMS = 11;
 
 struct MetalMakerRTPCParams
 {
@@ -54,6 +55,7 @@ struct MetalMakerRTPCParams
     AkReal32 fTranspose;
     AkReal32 fLength;
     AkReal32 fGain;
+    bool fLoop;
 };
 
 struct MetalMakerNonRTPCParams

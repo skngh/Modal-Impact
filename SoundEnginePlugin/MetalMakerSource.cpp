@@ -80,6 +80,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     const float random_param = m_pParams->NonRTPC.fRandomness;
     const float transpose = m_pParams->RTPC.fTranspose;
     const float length_mult = m_pParams->RTPC.fLength;
+    loop_ = m_pParams->RTPC.fLoop;
     gain_smoothed_ = utilities::DbToLin(m_pParams->RTPC.fGain);
     AkInt32 object_type = m_pParams->NonRTPC.fType;
  
@@ -92,7 +93,6 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
     
     // set modal bank values
-    float max_t60 = 0.0f;
     for (int i = 0; i < kNumModes; ++i)
     {
         filters::BiquadParams filterParams;
@@ -110,13 +110,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
         filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param) * transpose_gain_mult;
         filterParams.t60_ = t60_final;
-        max_t60 = max_t60 > t60_final ? max_t60 : t60_final; // for calculating duration
+        max_t60_ = max_t60_ > t60_final ? max_t60_ : t60_final; // for calculating duration
         
         modal_bank.SetParamsT60(filterParams, i);
     }
     
-    float envelope_duration = attack + decay + release;
-    m_durationHandler.Setup(envelope_duration + max_t60, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
+    float duration = attack + decay + release + max_t60_;
+    m_durationHandler.Setup(loop_ ? 0 : duration, in_pContext->GetNumLoops(), in_rFormat.uSampleRate);
     
     return AK_Success;
 }
@@ -153,8 +153,15 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
     
     if(!has_triggered_)
     {
-        envelope.TriggerEnvelope();
+        envelope.TriggerEnvelope(loop_);
         has_triggered_ = true;
+    }
+    
+    if(last_loop_value_ != loop_ && loop_ && !release_triggered_)
+    {
+        envelope.TriggerRelease();
+        m_durationHandler.SetDuration(m_pParams->RTPC.fRelease + max_t60_);
+        release_triggered_ = true;
     }
     
     UpdateRTPCParams();
@@ -177,12 +184,14 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
             ++uFramesProduced;
         }
     }
+    last_loop_value_ = loop_;
 }
 
 void MetalMakerSource::UpdateRTPCParams()
 {
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
     gain_target_ = utilities::DbToLin(m_pParams->RTPC.fGain);
+    loop_ = m_pParams->RTPC.fLoop;
 }
 
 AkReal32 MetalMakerSource::GetDuration() const

@@ -63,6 +63,7 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
         RTPC.fTranspose = 0.0f;
         RTPC.fLength = 1.0f;
         RTPC.fGain = -12.0f;
+        RTPC.fLoop = false;
         m_paramChangeHandler.SetAllParamChanges();
         return AK_Success;
     }
@@ -92,6 +93,7 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
     RTPC.fTranspose = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     RTPC.fLength = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
     RTPC.fGain = READBANKDATA(AkReal32, pParamsBlock, in_ulBlockSize);
+    RTPC.fLoop = READBANKDATA(bool, pParamsBlock, in_ulBlockSize);
     CHECKBANKDATASIZE(in_ulBlockSize, eResult);
     m_paramChangeHandler.SetAllParamChanges();
 
@@ -144,6 +146,10 @@ AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void
     case PARAM_GAIN_ID:
         RTPC.fGain = *((AkReal32*)in_pValue);
         m_paramChangeHandler.SetParamChange(PARAM_GAIN_ID);
+        break;
+    case PARAM_LOOP_ID:
+        RTPC.fGain = *((bool*)in_pValue);
+        m_paramChangeHandler.SetParamChange(PARAM_LOOP_ID);
         break;
     default:
         eResult = AK_InvalidParameter;

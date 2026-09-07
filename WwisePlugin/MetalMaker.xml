@@ -167,6 +167,10 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
+      <Property Name="Loop" Type="bool" DisplayName="Loop" DisplayGroup="Envelope" DataMeaning="Decibels" SupportRTPCType="Boolean">
+          <DefaultValue>false</DefaultValue>
+          <AudioEnginePropertyID>10</AudioEnginePropertyID>
+      </Property>
     </Properties>
   </SourcePlugin>
 </PluginModule>

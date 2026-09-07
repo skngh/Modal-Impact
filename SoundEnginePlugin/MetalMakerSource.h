@@ -82,7 +82,11 @@ private:
     AkReal32 last_q_ = -1.0f;
     AkReal32 gain_smoothed_ = 1.0f;
     AkReal32 gain_target_ = 1.0f;
+    float max_t60_ = 0.0f;
     bool has_triggered_ = false;
+    bool loop_ = false;
+    bool last_loop_value_ = false;
+    bool release_triggered_ = false;
     
     utilities::ADSR envelope;
     generators::WhiteNoise white_noise;
