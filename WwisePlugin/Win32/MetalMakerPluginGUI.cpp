@@ -25,33 +25,36 @@ the specific language governing permissions and limitations under the License.
 *******************************************************************************/
 
 #include "MetalMakerPluginGUI.h"
-// #include "../resource.h"
+#include "../resource.h"
 
 MetalMakerPluginGUI::MetalMakerPluginGUI()
 {
 }
 
 // Determine what dialog just get called and set the property names to UI control binding populated table.
-// bool MetalMakerPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT &out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *&out_pTable) const
-// {
-//   switch (in_eDialog)
-//   {
-//   case AK::Wwise::Plugin::SettingsDialog:
-//     out_uiDialogID = IDD_METALMAKERPLUGIN_BIG;
-//     out_pTable = NULL;
-//     return true;
+bool MetalMakerPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT &out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *&out_pTable) const
+ {
+   switch (in_eDialog)
+   {
+   case AK::Wwise::Plugin::SettingsDialog:
+     out_uiDialogID = IDD_METALMAKERPLUGIN_BIG;
+     out_pTable = NULL;
+     return true;
 
-//   case AK::Wwise::Plugin::ContentsEditorDialog:
-//     out_uiDialogID = IDD_METALMAKERPLUGIN_SMALL;
-//     out_pTable = NULL;
-//     return true;
-//   }
+   case AK::Wwise::Plugin::ContentsEditorDialog:
+     out_uiDialogID = IDD_METALMAKERPLUGIN_SMALL;
+     out_pTable = NULL;     
+     return true;
+ }
 
-//   return false;
-// }
+return false;
+}
 
 AK_ADD_PLUGIN_CLASS_TO_CONTAINER(
     MetalMaker,          // Name of the plug-in container for this shared library
     MetalMakerPluginGUI, // Authoring plug-in class to add to the plug-in container
     MetalMakerSource     // Corresponding Sound Engine plug-in class
 );
+AK_WWISE_PLUGIN_GUI_WINDOWS_BEGIN_POPULATE_TABLE(PropertyTable)
+AK_WWISE_PLUGIN_GUI_WINDOWS_POP_ITEM(IDC_CHECK_LOOP, Loop)
+AK_WWISE_PLUGIN_GUI_WINDOWS_END_POPULATE_TABLE()

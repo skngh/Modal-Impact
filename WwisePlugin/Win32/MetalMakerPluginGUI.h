@@ -34,5 +34,5 @@ class MetalMakerPluginGUI final
 public:
 	MetalMakerPluginGUI();
 
-	// virtual bool GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT & out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *& out_pTable) const override;
+	virtual bool GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT & out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *& out_pTable) const override;
 };
