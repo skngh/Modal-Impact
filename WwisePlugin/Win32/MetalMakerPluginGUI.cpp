@@ -27,6 +27,16 @@ the specific language governing permissions and limitations under the License.
 #include "MetalMakerPluginGUI.h"
 #include "../resource.h"
 
+AK_ADD_PLUGIN_CLASS_TO_CONTAINER(
+    MetalMaker,          // Name of the plug-in container for this shared library
+    MetalMakerPluginGUI, // Authoring plug-in class to add to the plug-in container
+    MetalMakerSource     // Corresponding Sound Engine plug-in class
+);
+AK_WWISE_PLUGIN_GUI_WINDOWS_BEGIN_POPULATE_TABLE(PropertyTable)
+AK_WWISE_PLUGIN_GUI_WINDOWS_POP_ITEM(IDC_CHECK_LOOP, "Loop")
+AK_WWISE_PLUGIN_GUI_WINDOWS_END_POPULATE_TABLE()
+
+
 MetalMakerPluginGUI::MetalMakerPluginGUI()
 {
 }
@@ -38,7 +48,7 @@ bool MetalMakerPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT 
    {
    case AK::Wwise::Plugin::SettingsDialog:
      out_uiDialogID = IDD_METALMAKERPLUGIN_BIG;
-     out_pTable = NULL;
+     out_pTable = PropertyTable;
      return true;
 
    case AK::Wwise::Plugin::ContentsEditorDialog:
@@ -50,11 +60,3 @@ bool MetalMakerPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT 
 return false;
 }
 
-AK_ADD_PLUGIN_CLASS_TO_CONTAINER(
-    MetalMaker,          // Name of the plug-in container for this shared library
-    MetalMakerPluginGUI, // Authoring plug-in class to add to the plug-in container
-    MetalMakerSource     // Corresponding Sound Engine plug-in class
-);
-AK_WWISE_PLUGIN_GUI_WINDOWS_BEGIN_POPULATE_TABLE(PropertyTable)
-AK_WWISE_PLUGIN_GUI_WINDOWS_POP_ITEM(IDC_CHECK_LOOP, "Loop")
-AK_WWISE_PLUGIN_GUI_WINDOWS_END_POPULATE_TABLE()

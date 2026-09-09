@@ -55,7 +55,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="Attack" Type="Real32" DisplayName="Attack" DisplayGroup="Envelope" SupportRTPCType="Exclusive">
+      <Property Name="Attack" Type="Real32" DisplayName="Attack" DisplayGroup="Envelope" SupportRTPCType="Additive">
         <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
         <DefaultValue>0.0</DefaultValue>
         <AudioEnginePropertyID>1</AudioEnginePropertyID>
@@ -68,7 +68,7 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Decay" Type="Real32" DisplayName="Decay" DisplayGroup="Envelope" SupportRTPCType="Exclusive">
+      <Property Name="Decay" Type="Real32" DisplayName="Decay" DisplayGroup="Envelope" SupportRTPCType="Additive">
         <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
         <DefaultValue>0.0</DefaultValue>
         <AudioEnginePropertyID>2</AudioEnginePropertyID>
@@ -81,7 +81,7 @@ for the documentation about the plugin xml format
           </ValueRestriction>
         </Restrictions>
       </Property>
-      <Property Name="Sustain" Type="Real32" DisplayName="Sustain" DisplayGroup="Envelope" SupportRTPCType="Exclusive">
+      <Property Name="Sustain" Type="Real32" DisplayName="Sustain" DisplayGroup="Envelope" SupportRTPCType="Additive">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="1" />
           <DefaultValue>1.0</DefaultValue>
           <AudioEnginePropertyID>3</AudioEnginePropertyID>
@@ -94,7 +94,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="Release" Type="Real32" DisplayName="Release" DisplayGroup="Envelope" SupportRTPCType="Exclusive">
+      <Property Name="Release" Type="Real32" DisplayName="Release" DisplayGroup="Envelope" SupportRTPCType="Additive">
           <UserInterface Step="0.01" Fine="0.001" Decimals="3" UIMax="5" />
           <DefaultValue>0.1</DefaultValue>
           <AudioEnginePropertyID>4</AudioEnginePropertyID>
@@ -107,7 +107,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="LPF" Type="Real32" DisplayName="Low pass filter" DisplayGroup="Exciter" DataMeaning="Frequency" SupportRTPCType="Exclusive">
+      <Property Name="LPF" Type="Real32" DisplayName="Low pass filter" DisplayGroup="Exciter" DataMeaning="Frequency" SupportRTPCType="Additive">
           <UserInterface Decimals="0"/>
           <DefaultValue>20000</DefaultValue>
           <AudioEnginePropertyID>5</AudioEnginePropertyID>
@@ -133,7 +133,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="Transpose" Type="Real32" DisplayName="Transpose" DisplayGroup="Modes" SupportRTPCType="Exclusive">
+      <Property Name="Transpose" Type="Real32" DisplayName="Transpose" DisplayGroup="Modes" SupportRTPCType="Additive">
           <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="12" />
           <DefaultValue>0.0</DefaultValue>
           <AudioEnginePropertyID>7</AudioEnginePropertyID>
@@ -146,7 +146,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="Length" Type="Real32" DisplayName="Length Multiplier" DisplayGroup="Modes" SupportRTPCType="Exclusive">
+      <Property Name="Length" Type="Real32" DisplayName="Length Multiplier" DisplayGroup="Modes" SupportRTPCType="Additive">
           <UserInterface Step="0.01" Fine="0.001" Decimals="2" UIMax="2" />
           <DefaultValue>1.0</DefaultValue>
           <AudioEnginePropertyID>8</AudioEnginePropertyID>
@@ -159,7 +159,7 @@ for the documentation about the plugin xml format
             </ValueRestriction>
           </Restrictions>
       </Property>
-      <Property Name="Gain" Type="Real32" DisplayName="Gain" DisplayGroup="Modes" DataMeaning="Decibels" SupportRTPCType="Exclusive">
+      <Property Name="Gain" Type="Real32" DisplayName="Gain" DisplayGroup="Modes" DataMeaning="Decibels" SupportRTPCType="Additive">
           <UserInterface Fine="0.1" Decimals="1"/>
           <DefaultValue>-12</DefaultValue>
           <AudioEnginePropertyID>9</AudioEnginePropertyID>
