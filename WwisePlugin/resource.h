@@ -6,8 +6,9 @@
 #define IDD_METALMAKERPLUGIN_SMALL      105
 #define ID_MODE_GROUP                   1001
 #define IDD_RANDOMNESS                  1002
-#define IDC_CHECK1                      1003
+#define IDC_RANDOMNESS                  1002
 #define IDC_CHECK_LOOP                  1004
+#define IDC_COMBO_OBJECTTYPE            1005
 
 // Next default values for new objects
 // 
@@ -15,7 +16,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        107
 #define _APS_NEXT_COMMAND_VALUE         40001
-#define _APS_NEXT_CONTROL_VALUE         1005
+#define _APS_NEXT_CONTROL_VALUE         1006
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
