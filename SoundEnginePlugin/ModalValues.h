@@ -44,7 +44,7 @@ static constexpr ModalBankPreset kModalBanks[] =
             {0.7f, 0.65f, 0.75f, 0.34f, 0.43f, 0.45f, 0.38f,
              0.38f, 0.2f, 0.4f, 0.34f, 0.28f, 0.25f, 0.27f, 0.2f},
             {0.05f, 0.87f, 0.71f, 0.21f, 0.4f, 0.73f, 0.58f,
-             0.23f, 0.16f, 0.45f, 0.73f, 0.48f, 0.38f, 0.32f, 1.0f},
+             0.23f, 0.16f, 0.35f, 0.43f, 0.28f, 0.18f, 0.12f, 1.0f},
             0.1496f,
         },
     // small ceramic pot
