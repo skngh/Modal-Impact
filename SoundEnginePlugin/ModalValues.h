@@ -45,7 +45,7 @@ static constexpr ModalBankPreset kModalBanks[] =
              0.38f, 0.2f, 0.4f, 0.34f, 0.28f, 0.25f, 0.27f, 0.2f},
             {0.05f, 0.87f, 0.71f, 0.21f, 0.4f, 0.73f, 0.58f,
              0.23f, 0.16f, 0.45f, 0.73f, 0.48f, 0.38f, 0.32f, 1.0f},
-            1.0f,
+            0.1496f,
         },
     // small ceramic pot
     {
@@ -55,7 +55,7 @@ static constexpr ModalBankPreset kModalBanks[] =
              0.2f, 0.3f, 0.24f, 0.25f, 0.25f, 0.17f, 0.17f, 0.22f},
             {0.07f, 0.11f, 1.0f, 0.31f, 0.54f, 0.1f, 0.11f,
              0.05f, 0.05f, 0.05f, 0.09f, 0.07f, 0.05f, 0.05f, 0.06f},
-            1.0f,
+            0.3548f,
         },
     // metal pole
     {
@@ -65,7 +65,7 @@ static constexpr ModalBankPreset kModalBanks[] =
              0.27f, 0.17f, 0.19f, 0.17f, 0.32f, 0.28f, 0.19f, 0.25f},
             {0.88f, 0.25f, 0.12f, 0.11f, 0.13f, 0.18f, 0.43f,
              0.29f, 0.15f, 0.19f, 0.27f, 1.0f, 0.62f, 0.68f, 0.25f},
-            1.0f,
+            0.1778f,
         },
     // metal rung
     {
@@ -75,7 +75,7 @@ static constexpr ModalBankPreset kModalBanks[] =
              0.3f, 1.18f, 0.32f, 0.65f, 0.22f, 0.5f, 0.3f, 0.26f},
             {0.39f, 0.31f, 0.12f, 0.27f, 0.4f, 0.25f, 0.2f,
              0.18f, 0.16f, 0.45f, 0.13f, 0.15f, 0.21f, 1.0f, 0.41f},
-            1.0f,
+            0.2113f,
         },
     // plastic pot
     {
@@ -84,8 +84,8 @@ static constexpr ModalBankPreset kModalBanks[] =
             {0.28f, 0.1f, 0.23f, 0.4f, 0.15f, 0.18f, 0.24f,
              0.23f, 0.21f, 0.23f, 0.13f, 0.05f, 0.03f, 0.06f, 0.07f},
             {0.15f, 0.14f, 0.19f, 0.3f, 0.3f, 0.53f, 1.0f,
-             0.56f, 0.45f, 0.19f, 0.18f, 0.02f, 0.01f, 0.01f, 0.01f},
-            1.0f,
+             0.56f, 0.45f, 0.19f, 0.12f, 0.02f, 0.01f, 0.01f, 0.01f},
+            1.2589f,
         },
     // wood palette
     {
@@ -94,7 +94,7 @@ static constexpr ModalBankPreset kModalBanks[] =
             {0.06f, 0.2f, 0.13f, 0.36f, 0.25f, 0.35f, 0.26f,
              0.3f, 0.24f, 0.13f, 0.05f, 0.08f, 0.1f, 0.065f, 0.055f},
             {0.01f, 0.18f, 0.1f, 0.27f, 0.21f, 1.0f, 0.58f,
-             0.46f, 0.54f, 0.14f, 0.07f, 0.11f, 0.14f, 0.05f, 0.04f},
-            1.0f,
+             0.46f, 0.54f, 0.14f, 0.07f, 0.7f, 0.08f, 0.05f, 0.04f},
+            0.7079f,
         },
 };
