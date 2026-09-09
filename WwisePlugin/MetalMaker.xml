@@ -43,9 +43,14 @@ for the documentation about the plugin xml format
           <Restrictions>
             <ValueRestriction>
               <Enumeration Type="int32">
-                <Value DisplayName="Hollow Bottle">0</Value>
-                <Value DisplayName="Sword">1</Value>
-                <Value DisplayName="Pipe">2</Value>
+                <Value DisplayName="Metal Bottle">0</Value>
+                <Value DisplayName="Knife">1</Value>
+                <Value DisplayName="Ceramic Pot Big">2</Value>
+                <Value DisplayName="Ceramic Pot Small">3</Value>
+                <Value DisplayName="Metal Pole">4</Value>
+                <Value DisplayName="Metal Rung">5</Value>
+                <Value DisplayName="Plastic Pot">6</Value>
+                <Value DisplayName="Wooden Palette">7</Value>
               </Enumeration>
             </ValueRestriction>
           </Restrictions>
