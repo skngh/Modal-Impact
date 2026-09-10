@@ -84,15 +84,9 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     gain_smoothed_ = utilities::DbToLin(m_pParams->RTPC.fGain);
     AkInt32 object_type = m_pParams->NonRTPC.fType;
  
-    // convert semitones to transposition amount.
-    // Scale gain by transposition (higher freq Q's are much louder and need to be scaled down)
-    const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
-    const float transpose_gain_mult = 1.0f / transpose_amount;
-    
     envelope.SetParams(attack, decay, sustain, release);
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
     
-    filters::BiquadParams filterParams;
     const auto& preset = kModalBanks[object_type];
     preset_post_gain_ = preset.post_gain_;
     // set modal bank values
@@ -107,13 +101,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
         
         const float t60_final = preset.filter_t60_[i] * (1.0f + kT60Jitter * random_val * random_param) * length_mult;
         
-        filterParams.frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param) * transpose_amount;
-        filterParams.gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param) * transpose_gain_mult;
-        filterParams.t60_ = t60_final;
+        base_filter_params_[i].frequency_ = preset.filter_freqs_[i] * (1.0f + kFreqJitter * random_val * random_param);
+        base_filter_params_[i].gain_ = preset.filter_gain_[i] * (1.0f + kGainJitter * random_val * random_param);
+        base_filter_params_[i].t60_ = t60_final;
         max_t60_ = max_t60_ > t60_final ? max_t60_ : t60_final; // for calculating duration
-        
-        modal_bank.SetParamsT60(filterParams, i);
     }
+    
+    ApplyTranspose(transpose);
     
     // calculate duration + looping logic
     float duration = attack + decay + release + max_t60_;
@@ -195,8 +189,31 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
     last_loop_value_ = loop_;
 }
 
+void MetalMakerSource::ApplyTranspose(float transpose)
+{
+    // convert semitones to transposition amount
+    const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
+    // scale gain by transposition amount (it gets much louder when higher)
+    const float transpose_gain_mult = 1.0f / transpose_amount;
+
+    for (int i = 0; i < kNumModes; ++i)
+    {
+        filters::BiquadParams p = base_filter_params_[i];
+        p.frequency_ *= transpose_amount;
+        p.gain_ *= transpose_gain_mult;
+        modal_bank.SetParamsT60(p, i);
+    }
+}
+
 void MetalMakerSource::UpdateRTPCParams()
 {
+    auto& changes = m_pParams->m_paramChangeHandler;
+    
+    if(changes.HasChanged(PARAM_TRANSPOSE_ID))
+    {
+        ApplyTranspose(m_pParams->RTPC.fTranspose);
+        changes.ResetParamChange(PARAM_TRANSPOSE_ID);
+    }
     lpf.SetCutoff(m_pParams->RTPC.fLPF);
     gain_target_ = utilities::DbToLin(m_pParams->RTPC.fGain);
     loop_ = m_pParams->RTPC.fLoop;

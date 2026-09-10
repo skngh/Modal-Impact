@@ -68,9 +68,8 @@ public:
 private:
     static constexpr float kPostGain = 0.5f; // separate from gain param
 
-    /// Pull the per-buffer RTPC values. Transpose and Length are not handled
-    /// here: they are latched in Init(), see the comment there.
     void UpdateRTPCParams();
+    void ApplyTranspose(float transpose);
     
     MetalMakerSourceParams* m_pParams;
     AK::IAkPluginMemAlloc* m_pAllocator;
@@ -89,6 +88,7 @@ private:
     bool last_loop_value_ = false;
     bool release_triggered_ = false;
     float preset_post_gain_ = 1.0f;
+    filters::BiquadParams base_filter_params_[kNumModes];
     
     utilities::ADSR envelope;
     generators::WhiteNoise white_noise;
