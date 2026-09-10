@@ -41,7 +41,7 @@ AK::IAkPluginParam* CreateModalImpactSourceParams(AK::IAkPluginMemAlloc* in_pAll
 
 AK_IMPLEMENT_PLUGIN_FACTORY(ModalImpactSource, AkPluginTypeSource, ModalImpactConfig::CompanyID, ModalImpactConfig::PluginID)
 
-static AkUInt32 MixSeed(AkUInt32 x) // thanks stack overflow
+static AkUInt32 MixSeed(AkUInt32 x) // scrambles thing idek found it online
 {
     x ^= x >> 16;
     x *= 0x7feb352du;
