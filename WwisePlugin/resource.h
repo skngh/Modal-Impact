@@ -2,8 +2,8 @@
 // Microsoft Visual C++ generated include file.
 // Used by Resource.rc
 //
-#define IDD_METALMAKERPLUGIN_BIG        5
-#define IDD_METALMAKERPLUGIN_SMALL      105
+#define IDD_MODALIMPACTPLUGIN_BIG        5
+#define IDD_MODALIMPACTPLUGIN_SMALL      105
 #define ID_MODE_GROUP                   1001
 #define IDC_RANDOMNESS                  1002
 #define IDC_CHECK_LOOP                  1004

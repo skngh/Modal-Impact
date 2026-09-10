@@ -5,11 +5,11 @@
     "Authoring": [
         {
             // The files in the Help folder located at the root of the plug-in directory
-            // will be packaged so that they are installed in the Authoring/Help/MetalMaker folder
+            // will be packaged so that they are installed in the Authoring/Help/ModalImpact folder
             // of a Wwise installation
-            "Authoring/Help/MetalMaker": ["Help/*"],
+            "Authoring/Help/ModalImpact": ["Help/*"],
             // Similarly for the files in the FactoryAssets folder
-            "Authoring/Data/Factory Assets/MetalMaker": ["FactoryAssets/*"]
+            "Authoring/Data/Factory Assets/ModalImpact": ["FactoryAssets/*"]
         }
     ]
 

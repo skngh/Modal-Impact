@@ -29,8 +29,8 @@ if not _AK_PREMAKE then
 end
 
 local Plugin = {}
-Plugin.name = "MetalMaker"
-Plugin.factoryheader = "../SoundEnginePlugin/MetalMakerSourceFactory.h"
+Plugin.name = "ModalImpact"
+Plugin.factoryheader = "../SoundEnginePlugin/ModalImpactSourceFactory.h"
 Plugin.appleteamid = ""
 Plugin.signtoolargs = {}
 Plugin.sdk = {}
@@ -51,7 +51,7 @@ Plugin.sdk.static.files = -- https://github.com/premake/premake-core/wiki/files
 }
 Plugin.sdk.static.excludes = -- https://github.com/premake/premake-core/wiki/removefiles
 {
-    "MetalMakerSourceShared.cpp"
+    "ModalImpactSourceShared.cpp"
 }
 Plugin.sdk.static.links = -- https://github.com/premake/premake-core/wiki/links
 {
@@ -71,8 +71,8 @@ Plugin.sdk.shared.includedirs =
 }
 Plugin.sdk.shared.files =
 {
-    "MetalMakerSourceShared.cpp",
-    "MetalMakerSourceFactory.h",
+    "ModalImpactSourceShared.cpp",
+    "ModalImpactSourceFactory.h",
 }
 Plugin.sdk.shared.excludes =
 {
@@ -97,8 +97,8 @@ Plugin.authoring.files =
     "**.h",
     "**.hpp",
     "**.c",
-    "MetalMaker.def",
-    "MetalMaker.xml",
+    "ModalImpact.def",
+    "ModalImpact.xml",
     "**.rc",
 }
 Plugin.authoring.excludes =

@@ -24,12 +24,12 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "../SoundEnginePlugin/MetalMakerSource.h"
+#include "../SoundEnginePlugin/ModalImpactSourceParams.h"
 
 #include <catch_amalgamated.hpp>
 
-TEST_CASE("MetalMakerSourceTestPlaceholder")
+TEST_CASE("ModalImpactSourceParamsTestPlaceholder")
 {
-    MetalMakerSource source;
+    ModalImpactSourceParams sourceParams;
     REQUIRE(true);
 }

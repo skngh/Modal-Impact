@@ -28,8 +28,8 @@ the specific language governing permissions and limitations under the License.
 See https://www.audiokinetic.com/library/edge/?source=Help&id=import_factory_assets
 for more information on factory assets
 -->
-<Manifest Name="Metal Maker" Type="Presets">
+<Manifest Name="Modal Impact" Type="Presets">
   <Dependencies>
-    <Plugin PluginName="Metal Maker" CompanyID="64" PluginID="20572" PluginType="2"/>
+    <Plugin PluginName="Modal Impact" CompanyID="64" PluginID="20572" PluginType="2"/>
   </Dependencies>
 </Manifest>

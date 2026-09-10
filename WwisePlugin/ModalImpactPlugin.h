@@ -23,16 +23,25 @@ the specific language governing permissions and limitations under the License.
 
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
+
 #pragma once
 
-#include "../MetalMakerPlugin.h"
+#include <AK/Wwise/Plugin.h>
 
-class MetalMakerPluginGUI final
-	: public AK::Wwise::Plugin::PluginMFCWindows<>,
-	  public AK::Wwise::Plugin::GUIWindows
+/// See https://www.audiokinetic.com/library/edge/?source=SDK&id=plugin__dll.html
+/// for the documentation about Authoring plug-ins
+class ModalImpactPlugin final
+    : public AK::Wwise::Plugin::AudioPlugin
 {
 public:
-	MetalMakerPluginGUI();
+    ModalImpactPlugin();
+    ~ModalImpactPlugin();
 
-	virtual bool GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT & out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *& out_pTable) const override;
+    /// This function is called by Wwise to obtain parameters that will be written to a bank.
+    /// Because these can be changed at run-time, the parameter block should stay relatively small.
+    // Larger data should be put in the Data Block.
+    bool GetBankParameters(const GUID & in_guidPlatform, AK::Wwise::Plugin::DataWriter& in_dataWriter) const override;
+
 };
+
+AK_DECLARE_PLUGIN_CONTAINER(ModalImpact);	// Exposes our PluginContainer structure that contains the info for our plugin

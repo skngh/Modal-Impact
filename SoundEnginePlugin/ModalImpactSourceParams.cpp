@@ -24,31 +24,31 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "MetalMakerSourceParams.h"
+#include "ModalImpactSourceParams.h"
 
 #include <AK/Tools/Common/AkBankReadHelpers.h>
 
-MetalMakerSourceParams::MetalMakerSourceParams()
+ModalImpactSourceParams::ModalImpactSourceParams()
 {
 }
 
-MetalMakerSourceParams::~MetalMakerSourceParams()
+ModalImpactSourceParams::~ModalImpactSourceParams()
 {
 }
 
-MetalMakerSourceParams::MetalMakerSourceParams(const MetalMakerSourceParams& in_rParams)
+ModalImpactSourceParams::ModalImpactSourceParams(const ModalImpactSourceParams& in_rParams)
 {
     RTPC = in_rParams.RTPC;
     NonRTPC = in_rParams.NonRTPC;
     m_paramChangeHandler.SetAllParamChanges();
 }
 
-AK::IAkPluginParam* MetalMakerSourceParams::Clone(AK::IAkPluginMemAlloc* in_pAllocator)
+AK::IAkPluginParam* ModalImpactSourceParams::Clone(AK::IAkPluginMemAlloc* in_pAllocator)
 {
-    return AK_PLUGIN_NEW(in_pAllocator, MetalMakerSourceParams(*this));
+    return AK_PLUGIN_NEW(in_pAllocator, ModalImpactSourceParams(*this));
 }
 
-AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, const void* in_pParamsBlock, AkUInt32 in_ulBlockSize)
+AKRESULT ModalImpactSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, const void* in_pParamsBlock, AkUInt32 in_ulBlockSize)
 {
     if (in_ulBlockSize == 0)
     {
@@ -71,13 +71,13 @@ AKRESULT MetalMakerSourceParams::Init(AK::IAkPluginMemAlloc* in_pAllocator, cons
     return SetParamsBlock(in_pParamsBlock, in_ulBlockSize);
 }
 
-AKRESULT MetalMakerSourceParams::Term(AK::IAkPluginMemAlloc* in_pAllocator)
+AKRESULT ModalImpactSourceParams::Term(AK::IAkPluginMemAlloc* in_pAllocator)
 {
     AK_PLUGIN_DELETE(in_pAllocator, this);
     return AK_Success;
 }
 
-AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkUInt32 in_ulBlockSize)
+AKRESULT ModalImpactSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkUInt32 in_ulBlockSize)
 {
     AKRESULT eResult = AK_Success;
     AkUInt8* pParamsBlock = (AkUInt8*)in_pParamsBlock;
@@ -100,7 +100,7 @@ AKRESULT MetalMakerSourceParams::SetParamsBlock(const void* in_pParamsBlock, AkU
     return eResult;
 }
 
-AKRESULT MetalMakerSourceParams::SetParam(AkPluginParamID in_paramID, const void* in_pValue, AkUInt32 in_ulParamSize)
+AKRESULT ModalImpactSourceParams::SetParam(AkPluginParamID in_paramID, const void* in_pValue, AkUInt32 in_ulParamSize)
 {
     AKRESULT eResult = AK_Success;
 

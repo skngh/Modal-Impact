@@ -23,10 +23,16 @@ the specific language governing permissions and limitations under the License.
 
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
+#pragma once
 
-#ifndef MetalMakerSourceFactory_H
-#define MetalMakerSourceFactory_H
+#include "../ModalImpactPlugin.h"
 
-AK_STATIC_LINK_PLUGIN(MetalMakerSource)
+class ModalImpactPluginGUI final
+	: public AK::Wwise::Plugin::PluginMFCWindows<>,
+	  public AK::Wwise::Plugin::GUIWindows
+{
+public:
+	ModalImpactPluginGUI();
 
-#endif // MetalMakerSourceFactory_H
+	virtual bool GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT & out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *& out_pTable) const override;
+};

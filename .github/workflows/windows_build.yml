@@ -41,11 +41,11 @@ jobs:
     - name: Upload dll
       uses: actions/upload-artifact@v4
       with:
-        name: MetalMaker.dll
-        path: ${{env.BUILD_DIR}}\MetalMaker.dll
+        name: ModalImpact.dll
+        path: ${{env.BUILD_DIR}}\ModalImpact.dll
 
     - name: Upload xml
       uses: actions/upload-artifact@v4
       with:
-        name: MetalMaker.xml
-        path: ${{env.BUILD_DIR}}\MetalMaker.xml    
+        name: ModalImpact.xml
+        path: ${{env.BUILD_DIR}}\ModalImpact.xml    

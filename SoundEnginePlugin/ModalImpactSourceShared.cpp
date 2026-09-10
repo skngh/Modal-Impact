@@ -24,17 +24,10 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#ifndef MetalMakerConfig_H
-#define MetalMakerConfig_H
+#include <AK/SoundEngine/Common/IAkPlugin.h>
+#include "ModalImpactSourceFactory.h"
 
-// NB: In order to properly change the CompanyID / PluginID, you must change them:
-// - In this file;
-// - In the xml file located in the WwisePlugin directory;
-// - In the xml file located in the FactoryAssets directory.
-namespace MetalMakerConfig
-{
-    static const unsigned short CompanyID = 64;
-    static const unsigned short PluginID = 20572;
-}
+#include <AK/Tools/Common/AkAssert.h>
 
-#endif // MetalMakerConfig_H
+DEFINE_PLUGIN_ASSERT_HOOK;
+DEFINE_PLUGIN_REGISTER_HOOK;

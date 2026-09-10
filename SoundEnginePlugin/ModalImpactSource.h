@@ -24,10 +24,10 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#ifndef MetalMakerSource_H
-#define MetalMakerSource_H
+#ifndef ModalImpactSource_H
+#define ModalImpactSource_H
 
-#include "MetalMakerSourceParams.h"
+#include "ModalImpactSourceParams.h"
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
 #include "../thirdparty/dsp/Source/sknightdsp.h"
 #include "ModalValues.h"
@@ -36,12 +36,12 @@ using namespace sknight;
 
 /// See https://www.audiokinetic.com/library/edge/?source=SDK&id=soundengine__plugins__source.html
 /// for the documentation about source plug-ins
-class MetalMakerSource
+class ModalImpactSource
     : public AK::IAkSourcePlugin
 {
 public:
-    MetalMakerSource();
-    ~MetalMakerSource();
+    ModalImpactSource();
+    ~ModalImpactSource();
 
     /// Plug-in initialization.
     /// Prepares the plug-in for data processing, allocates memory and sets up the initial conditions.
@@ -71,7 +71,7 @@ private:
     void ApplyTranspose(float transpose);
     float NextRandom();
     
-    MetalMakerSourceParams* m_pParams;
+    ModalImpactSourceParams* m_pParams;
     AK::IAkPluginMemAlloc* m_pAllocator;
     AK::IAkSourcePluginContext* m_pContext;
     AkFXDurationHandler m_durationHandler;
@@ -97,4 +97,4 @@ private:
     filters::OnePole lpf;
 };
 
-#endif // MetalMakerSource_H
+#endif // ModalImpactSource_H

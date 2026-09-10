@@ -24,24 +24,39 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#pragma once
+#include "ModalImpactPluginGUI.h"
+#include "../resource.h"
 
-#include <AK/Wwise/Plugin.h>
+AK_ADD_PLUGIN_CLASS_TO_CONTAINER(
+    ModalImpact,          // Name of the plug-in container for this shared library
+    ModalImpactPluginGUI, // Authoring plug-in class to add to the plug-in container
+    ModalImpactSource     // Corresponding Sound Engine plug-in class
+);
+AK_WWISE_PLUGIN_GUI_WINDOWS_BEGIN_POPULATE_TABLE(PropertyTable)
+AK_WWISE_PLUGIN_GUI_WINDOWS_POP_ITEM(IDC_CHECK_LOOP, "Loop")
+AK_WWISE_PLUGIN_GUI_WINDOWS_END_POPULATE_TABLE()
 
-/// See https://www.audiokinetic.com/library/edge/?source=SDK&id=plugin__dll.html
-/// for the documentation about Authoring plug-ins
-class MetalMakerPlugin final
-    : public AK::Wwise::Plugin::AudioPlugin
+
+ModalImpactPluginGUI::ModalImpactPluginGUI()
 {
-public:
-    MetalMakerPlugin();
-    ~MetalMakerPlugin();
+}
 
-    /// This function is called by Wwise to obtain parameters that will be written to a bank.
-    /// Because these can be changed at run-time, the parameter block should stay relatively small.
-    // Larger data should be put in the Data Block.
-    bool GetBankParameters(const GUID & in_guidPlatform, AK::Wwise::Plugin::DataWriter& in_dataWriter) const override;
+// Determine what dialog just get called and set the property names to UI control binding populated table.
+bool ModalImpactPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT &out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *&out_pTable) const
+ {
+   switch (in_eDialog)
+   {
+   case AK::Wwise::Plugin::SettingsDialog:
+     out_uiDialogID = IDD_MODALIMPACTPLUGIN_BIG;
+     out_pTable = PropertyTable;
+     return true;
 
-};
+   case AK::Wwise::Plugin::ContentsEditorDialog:
+     out_uiDialogID = IDD_MODALIMPACTPLUGIN_SMALL;
+     out_pTable = NULL;     
+     return true;
+ }
 
-AK_DECLARE_PLUGIN_CONTAINER(MetalMaker);	// Exposes our PluginContainer structure that contains the info for our plugin
+return false;
+}
+

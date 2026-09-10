@@ -1,6 +1,6 @@
 //
 //  ModalValues.h
-//  MetalMakerSource
+//  ModalImpactSource
 //
 //  Created by Sam Knight on 9/4/26.
 //

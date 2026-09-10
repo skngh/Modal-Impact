@@ -24,22 +24,22 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "MetalMakerSource.h"
-#include "../MetalMakerConfig.h"
+#include "ModalImpactSource.h"
+#include "../ModalImpactConfig.h"
 
 #include <AK/AkWwiseSDKVersion.h>
 
-AK::IAkPlugin* CreateMetalMakerSource(AK::IAkPluginMemAlloc* in_pAllocator)
+AK::IAkPlugin* CreateModalImpactSource(AK::IAkPluginMemAlloc* in_pAllocator)
 {
-    return AK_PLUGIN_NEW(in_pAllocator, MetalMakerSource());
+    return AK_PLUGIN_NEW(in_pAllocator, ModalImpactSource());
 }
 
-AK::IAkPluginParam* CreateMetalMakerSourceParams(AK::IAkPluginMemAlloc* in_pAllocator)
+AK::IAkPluginParam* CreateModalImpactSourceParams(AK::IAkPluginMemAlloc* in_pAllocator)
 {
-    return AK_PLUGIN_NEW(in_pAllocator, MetalMakerSourceParams());
+    return AK_PLUGIN_NEW(in_pAllocator, ModalImpactSourceParams());
 }
 
-AK_IMPLEMENT_PLUGIN_FACTORY(MetalMakerSource, AkPluginTypeSource, MetalMakerConfig::CompanyID, MetalMakerConfig::PluginID)
+AK_IMPLEMENT_PLUGIN_FACTORY(ModalImpactSource, AkPluginTypeSource, ModalImpactConfig::CompanyID, ModalImpactConfig::PluginID)
 
 static AkUInt32 MixSeed(AkUInt32 x) // thanks stack overflow
 {
@@ -51,20 +51,20 @@ static AkUInt32 MixSeed(AkUInt32 x) // thanks stack overflow
     return x;
 }
 
-MetalMakerSource::MetalMakerSource()
+ModalImpactSource::ModalImpactSource()
     : m_pParams(nullptr)
     , m_pAllocator(nullptr)
     , m_pContext(nullptr)
 {
 }
 
-MetalMakerSource::~MetalMakerSource()
+ModalImpactSource::~ModalImpactSource()
 {
 }
 
-AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSourcePluginContext* in_pContext, AK::IAkPluginParam* in_pParams, AkAudioFormat& in_rFormat)
+AKRESULT ModalImpactSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSourcePluginContext* in_pContext, AK::IAkPluginParam* in_pParams, AkAudioFormat& in_rFormat)
 {
-    m_pParams = (MetalMakerSourceParams*)in_pParams;
+    m_pParams = (ModalImpactSourceParams*)in_pParams;
     m_pAllocator = in_pAllocator;
     m_pContext = in_pContext;
     
@@ -126,13 +126,13 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     return AK_Success;
 }
 
-AKRESULT MetalMakerSource::Term(AK::IAkPluginMemAlloc* in_pAllocator)
+AKRESULT ModalImpactSource::Term(AK::IAkPluginMemAlloc* in_pAllocator)
 {
     AK_PLUGIN_DELETE(in_pAllocator, this);
     return AK_Success;
 }
 
-AKRESULT MetalMakerSource::Reset()
+AKRESULT ModalImpactSource::Reset()
 {
     white_noise.Reset();
     envelope.Reset();
@@ -147,7 +147,7 @@ AKRESULT MetalMakerSource::Reset()
     return AK_Success;
 }
 
-AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
+AKRESULT ModalImpactSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
 {
     out_rPluginInfo.eType = AkPluginTypeSource;
     out_rPluginInfo.bIsInPlace = true;
@@ -155,7 +155,7 @@ AKRESULT MetalMakerSource::GetPluginInfo(AkPluginInfo& out_rPluginInfo)
     return AK_Success;
 }
 
-void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
+void ModalImpactSource::Execute(AkAudioBuffer* out_pBuffer)
 {
     m_durationHandler.ProduceBuffer(out_pBuffer);
     elapsed_frames_ += out_pBuffer->uValidFrames;
@@ -197,7 +197,7 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
     last_loop_value_ = loop_;
 }
 
-float MetalMakerSource::NextRandom()
+float ModalImpactSource::NextRandom()
 {
     rng_state_ ^= rng_state_ << 13;
     rng_state_ ^= rng_state_ >> 17;
@@ -205,7 +205,7 @@ float MetalMakerSource::NextRandom()
     return static_cast<float>(rng_state_) * (2.0f / 4294967296.0f) - 1.0f;
 }
 
-void MetalMakerSource::ApplyTranspose(float transpose)
+void ModalImpactSource::ApplyTranspose(float transpose)
 {
     // convert semitones to transposition amount
     const float transpose_amount = std::pow(2.0f, transpose / 12.0f);
@@ -221,7 +221,7 @@ void MetalMakerSource::ApplyTranspose(float transpose)
     }
 }
 
-void MetalMakerSource::UpdateRTPCParams()
+void ModalImpactSource::UpdateRTPCParams()
 {
     auto& changes = m_pParams->m_paramChangeHandler;
     
@@ -235,7 +235,7 @@ void MetalMakerSource::UpdateRTPCParams()
     loop_ = m_pParams->RTPC.fLoop;
 }
 
-AkReal32 MetalMakerSource::GetDuration() const
+AkReal32 ModalImpactSource::GetDuration() const
 {
     return m_durationHandler.GetDuration() * 1000.0f;
 }

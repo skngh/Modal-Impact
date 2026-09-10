@@ -1,4 +1,4 @@
-# Metal Maker
+# Modal Impact
 
 A Wwise source plug-in that synthesizes impact sounds. No samples, no audio files.
 Every hit is generated from scratch at runtime.
@@ -7,7 +7,7 @@ Every hit is generated from scratch at runtime.
 
 ## What it does
 
-Metal Maker models what happens when you hit a physical object. A short burst of
+Modal Impact models what happens when you hit a physical object. A short burst of
 filtered noise stands in for the strike, and that burst excites a bank of 15 tuned
 resonators that ring out the way a real object would.
 

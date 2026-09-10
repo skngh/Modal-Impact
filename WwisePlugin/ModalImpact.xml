@@ -29,7 +29,7 @@ See https://www.audiokinetic.com/library/edge/?source=SDK&id=plugin__xml.html
 for the documentation about the plugin xml format
 -->
 <PluginModule>
-  <SourcePlugin Name="Metal Maker" CompanyID="64" PluginID="20572" DisplayName="Metal Maker">
+  <SourcePlugin Name="Modal Impact" CompanyID="64" PluginID="20572" DisplayName="Modal Impact">
     <PluginInfo CanUnlink="true" MenuPath="00-Wwise">
       <PlatformSupport>
         <Platform Name="Any"></Platform>

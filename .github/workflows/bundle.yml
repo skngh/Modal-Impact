@@ -1,8 +1,8 @@
-# Builds MetalMaker for Mac (Sound Engine) and Windows (Authoring + runtime engine),
+# Builds ModalImpact for Mac (Sound Engine) and Windows (Authoring + runtime engine),
 # packages each platform, generates a Wwise Launcher-installable bundle, and
 # uploads it as an artifact. On a `v*` tag push, also attaches it to a GitHub Release.
 
-name: Package and Bundle MetalMaker
+name: Package and Bundle ModalImpact
 
 on:
   workflow_dispatch:
@@ -107,12 +107,12 @@ jobs:
 
       - name: Zip bundle
         shell: powershell
-        run: Compress-Archive -Path Bundle\* -DestinationPath "MetalMaker-${{ env.PLUGIN_VERSION }}.zip" -Force
+        run: Compress-Archive -Path Bundle\* -DestinationPath "ModalImpact-${{ env.PLUGIN_VERSION }}.zip" -Force
 
       - name: Upload bundle artifact
         uses: actions/upload-artifact@v7
         with:
-          name: MetalMaker-bundle-${{ env.PLUGIN_VERSION }}
+          name: ModalImpact-bundle-${{ env.PLUGIN_VERSION }}
           path: "Bundle/*"
 
       - name: Create Release
@@ -120,4 +120,4 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           prerelease: true
-          files: "MetalMaker-${{ env.PLUGIN_VERSION }}.zip"
+          files: "ModalImpact-${{ env.PLUGIN_VERSION }}.zip"

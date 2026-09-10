@@ -24,39 +24,17 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "MetalMakerPluginGUI.h"
-#include "../resource.h"
+#ifndef ModalImpactConfig_H
+#define ModalImpactConfig_H
 
-AK_ADD_PLUGIN_CLASS_TO_CONTAINER(
-    MetalMaker,          // Name of the plug-in container for this shared library
-    MetalMakerPluginGUI, // Authoring plug-in class to add to the plug-in container
-    MetalMakerSource     // Corresponding Sound Engine plug-in class
-);
-AK_WWISE_PLUGIN_GUI_WINDOWS_BEGIN_POPULATE_TABLE(PropertyTable)
-AK_WWISE_PLUGIN_GUI_WINDOWS_POP_ITEM(IDC_CHECK_LOOP, "Loop")
-AK_WWISE_PLUGIN_GUI_WINDOWS_END_POPULATE_TABLE()
-
-
-MetalMakerPluginGUI::MetalMakerPluginGUI()
+// NB: In order to properly change the CompanyID / PluginID, you must change them:
+// - In this file;
+// - In the xml file located in the WwisePlugin directory;
+// - In the xml file located in the FactoryAssets directory.
+namespace ModalImpactConfig
 {
+    static const unsigned short CompanyID = 64;
+    static const unsigned short PluginID = 20572;
 }
 
-// Determine what dialog just get called and set the property names to UI control binding populated table.
-bool MetalMakerPluginGUI::GetDialog(AK::Wwise::Plugin::eDialog in_eDialog, UINT &out_uiDialogID, AK::Wwise::Plugin::PopulateTableItem *&out_pTable) const
- {
-   switch (in_eDialog)
-   {
-   case AK::Wwise::Plugin::SettingsDialog:
-     out_uiDialogID = IDD_METALMAKERPLUGIN_BIG;
-     out_pTable = PropertyTable;
-     return true;
-
-   case AK::Wwise::Plugin::ContentsEditorDialog:
-     out_uiDialogID = IDD_METALMAKERPLUGIN_SMALL;
-     out_pTable = NULL;     
-     return true;
- }
-
-return false;
-}
-
+#endif // ModalImpactConfig_H

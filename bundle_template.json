@@ -2,13 +2,13 @@
 // for the documentation about the bundle_template.json format
 {
     // Unique identifier of this bundle. Id must be unique across all existing plugins and versions.
-    "id": "Sam Knight.MetalMaker.${year}_${major}_${minor}_${build}",
+    "id": "Sam Knight.ModalImpact.${year}_${major}_${minor}_${build}",
 
     // Name displayed in the Wwise Launcher for this bundle
-    "name": "Metal Maker",
+    "name": "Modal Impact",
     
     // Tag uniquely identifying the plug-in (format [0-9A-z_]+, 50 characters maximum)
-    "tag": "MetalMaker",
+    "tag": "ModalImpact",
 
     // Description displayed in the Wwise Launcher for this bundle
     "description": "Modal Impact resonator",

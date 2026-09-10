@@ -24,10 +24,9 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include <AK/SoundEngine/Common/IAkPlugin.h>
-#include "MetalMakerSourceFactory.h"
+#ifndef ModalImpactSourceFactory_H
+#define ModalImpactSourceFactory_H
 
-#include <AK/Tools/Common/AkAssert.h>
+AK_STATIC_LINK_PLUGIN(ModalImpactSource)
 
-DEFINE_PLUGIN_ASSERT_HOOK;
-DEFINE_PLUGIN_REGISTER_HOOK;
+#endif // ModalImpactSourceFactory_H

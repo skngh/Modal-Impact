@@ -24,18 +24,18 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#include "MetalMakerPlugin.h"
-#include "../SoundEnginePlugin/MetalMakerSourceFactory.h"
+#include "ModalImpactPlugin.h"
+#include "../SoundEnginePlugin/ModalImpactSourceFactory.h"
 
-MetalMakerPlugin::MetalMakerPlugin()
+ModalImpactPlugin::ModalImpactPlugin()
 {
 }
 
-MetalMakerPlugin::~MetalMakerPlugin()
+ModalImpactPlugin::~ModalImpactPlugin()
 {
 }
 
-bool MetalMakerPlugin::GetBankParameters(const GUID &in_guidPlatform, AK::Wwise::Plugin::DataWriter &in_dataWriter) const
+bool ModalImpactPlugin::GetBankParameters(const GUID &in_guidPlatform, AK::Wwise::Plugin::DataWriter &in_dataWriter) const
 {
     // Write bank data here
     in_dataWriter.WriteInt32(m_propertySet.GetInt32(in_guidPlatform, "ObjectType"));
@@ -53,12 +53,12 @@ bool MetalMakerPlugin::GetBankParameters(const GUID &in_guidPlatform, AK::Wwise:
     return true;
 }
 
-AK_DEFINE_PLUGIN_CONTAINER(MetalMaker); // Create a PluginContainer structure that contains the info for our plugin
-AK_EXPORT_PLUGIN_CONTAINER(MetalMaker); // This is a DLL, we want to have a standardized name
+AK_DEFINE_PLUGIN_CONTAINER(ModalImpact); // Create a PluginContainer structure that contains the info for our plugin
+AK_EXPORT_PLUGIN_CONTAINER(ModalImpact); // This is a DLL, we want to have a standardized name
 AK_ADD_PLUGIN_CLASS_TO_CONTAINER(       // Add our CLI class to the PluginContainer
-    MetalMaker,                         // Name of the plug-in container for this shared library
-    MetalMakerPlugin,                   // Authoring plug-in class to add to the plug-in container
-    MetalMakerSource                    // Corresponding Sound Engine plug-in class
+    ModalImpact,                         // Name of the plug-in container for this shared library
+    ModalImpactPlugin,                   // Authoring plug-in class to add to the plug-in container
+    ModalImpactSource                    // Corresponding Sound Engine plug-in class
 );
 DEFINE_PLUGIN_REGISTER_HOOK
 

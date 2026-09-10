@@ -24,8 +24,8 @@ the specific language governing permissions and limitations under the License.
   Copyright (c) 2026 Audiokinetic Inc.
 *******************************************************************************/
 
-#ifndef MetalMakerSourceParams_H
-#define MetalMakerSourceParams_H
+#ifndef ModalImpactSourceParams_H
+#define ModalImpactSourceParams_H
 
 #include <AK/SoundEngine/Common/IAkPlugin.h>
 #include <AK/Plugin/PluginServices/AkFXParameterChangeHandler.h>
@@ -45,7 +45,7 @@ static const AkPluginParamID PARAM_GAIN_ID = 9;
 static const AkPluginParamID PARAM_LOOP_ID = 10;
 static const AkUInt32 NUM_PARAMS = 11;
 
-struct MetalMakerRTPCParams
+struct ModalImpactRTPCParams
 {
     AkReal32 fAttack;
     AkReal32 fDecay;
@@ -58,7 +58,7 @@ struct MetalMakerRTPCParams
     AkReal32 fLoop;
 };
 
-struct MetalMakerNonRTPCParams
+struct ModalImpactNonRTPCParams
 {
     AkInt32 fType;
     AkReal32 fRandomness;
@@ -76,13 +76,13 @@ enum ObjectTypes
     WOODEN_PALETTE,
 };
 
-struct MetalMakerSourceParams
+struct ModalImpactSourceParams
     : public AK::IAkPluginParam
 {
-    MetalMakerSourceParams();
-    MetalMakerSourceParams(const MetalMakerSourceParams& in_rParams);
+    ModalImpactSourceParams();
+    ModalImpactSourceParams(const ModalImpactSourceParams& in_rParams);
 
-    ~MetalMakerSourceParams();
+    ~ModalImpactSourceParams();
 
     /// Create a duplicate of the parameter node instance in its current state.
     IAkPluginParam* Clone(AK::IAkPluginMemAlloc* in_pAllocator) override;
@@ -102,8 +102,8 @@ struct MetalMakerSourceParams
 
     AK::AkFXParameterChangeHandler<NUM_PARAMS> m_paramChangeHandler;
 
-    MetalMakerRTPCParams RTPC;
-    MetalMakerNonRTPCParams NonRTPC;
+    ModalImpactRTPCParams RTPC;
+    ModalImpactNonRTPCParams NonRTPC;
 };
 
-#endif // MetalMakerSourceParams_H
+#endif // ModalImpactSourceParams_H
