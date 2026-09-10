@@ -62,9 +62,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     in_rFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
     
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<float> dis(0.0f, 1.0f); // 1 is exclusive
+    rng_state_ = in_pContext->GetVoiceInfo()->GetPlayingID() | 1u; // for randomness. makes sure it isn't 0 ever.
     
     // init effects
     white_noise.Init();
@@ -92,7 +90,7 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     // set modal bank values
     for (int i = 0; i < kNumModes; ++i)
     {
-        const float random_val = 2.0f * dis(gen) - 1.0f;
+        const float random_val = NextRandom();
         
         // plus or minus % for randomness
         constexpr float kFreqJitter = 0.75f;
@@ -132,7 +130,8 @@ AKRESULT MetalMakerSource::Reset()
     release_triggered_ = false;
     last_loop_value_ = false;
     elapsed_frames_ = 0;
-
+    gain_smoothed_ = 0.0f;
+    
     return AK_Success;
 }
 
@@ -166,9 +165,6 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         m_durationHandler.SetLooping(1);
         release_triggered_ = true;
     }
-    
-    
-    const AkUInt16 uNumFrames = out_pBuffer->uValidFrames;
 
     for (AkUInt32 i = 0; i < uNumChannels; ++i)
     {
@@ -187,6 +183,14 @@ void MetalMakerSource::Execute(AkAudioBuffer* out_pBuffer)
         }
     }
     last_loop_value_ = loop_;
+}
+
+float MetalMakerSource::NextRandom()
+{
+    rng_state_ ^= rng_state_ << 13;
+    rng_state_ ^= rng_state_ >> 17;
+    rng_state_ ^= rng_state_ << 5;
+    return static_cast<float>(rng_state_) * (2.0f / 4294967296.0f) - 1.0f;
 }
 
 void MetalMakerSource::ApplyTranspose(float transpose)

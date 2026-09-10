@@ -27,7 +27,6 @@ the specific language governing permissions and limitations under the License.
 #ifndef MetalMakerSource_H
 #define MetalMakerSource_H
 
-#include <random>
 #include "MetalMakerSourceParams.h"
 #include <AK/Plugin/PluginServices/AkFXDurationHandler.h>
 #include "../thirdparty/dsp/Source/sknightdsp.h"
@@ -70,6 +69,7 @@ private:
 
     void UpdateRTPCParams();
     void ApplyTranspose(float transpose);
+    float NextRandom();
     
     MetalMakerSourceParams* m_pParams;
     AK::IAkPluginMemAlloc* m_pAllocator;
@@ -77,6 +77,7 @@ private:
     AkFXDurationHandler m_durationHandler;
     
     AkUInt32 sample_rate_;
+    AkUInt32 rng_state_ = 1;
     AkReal32 last_frequency_ = -1.0f;
     AkReal32 last_q_ = -1.0f;
     AkReal32 gain_smoothed_ = 1.0f;

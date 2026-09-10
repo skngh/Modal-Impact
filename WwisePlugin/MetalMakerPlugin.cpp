@@ -35,21 +35,31 @@ MetalMakerPlugin::~MetalMakerPlugin()
 {
 }
 
-bool MetalMakerPlugin::GetBankParameters(const GUID & in_guidPlatform, AK::Wwise::Plugin::DataWriter& in_dataWriter) const
+bool MetalMakerPlugin::GetBankParameters(const GUID &in_guidPlatform, AK::Wwise::Plugin::DataWriter &in_dataWriter) const
 {
     // Write bank data here
-    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Duration"));
+    in_dataWriter.WriteInt32(m_propertySet.GetInt32(in_guidPlatform, "ObjectType"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Attack"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Decay"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Sustain"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Release"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "LPF"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Randomness"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Transpose"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Length"));
+    in_dataWriter.WriteReal32(m_propertySet.GetReal32(in_guidPlatform, "Gain"));
+    in_dataWriter.WriteBool(m_propertySet.GetBool(in_guidPlatform, "Loop"));
 
     return true;
 }
 
-AK_DEFINE_PLUGIN_CONTAINER(MetalMaker);											// Create a PluginContainer structure that contains the info for our plugin
-AK_EXPORT_PLUGIN_CONTAINER(MetalMaker);											// This is a DLL, we want to have a standardized name
-AK_ADD_PLUGIN_CLASS_TO_CONTAINER(                                             // Add our CLI class to the PluginContainer
-    MetalMaker,        // Name of the plug-in container for this shared library
-    MetalMakerPlugin,  // Authoring plug-in class to add to the plug-in container
-    MetalMakerSource   // Corresponding Sound Engine plug-in class
+AK_DEFINE_PLUGIN_CONTAINER(MetalMaker); // Create a PluginContainer structure that contains the info for our plugin
+AK_EXPORT_PLUGIN_CONTAINER(MetalMaker); // This is a DLL, we want to have a standardized name
+AK_ADD_PLUGIN_CLASS_TO_CONTAINER(       // Add our CLI class to the PluginContainer
+    MetalMaker,                         // Name of the plug-in container for this shared library
+    MetalMakerPlugin,                   // Authoring plug-in class to add to the plug-in container
+    MetalMakerSource                    // Corresponding Sound Engine plug-in class
 );
 DEFINE_PLUGIN_REGISTER_HOOK
 
-DEFINE_PLUGIN_ASSERT_HOOK;							// Placeholder assert hook for Wwise plug-ins using AKASSERT (cassert used by default)
+DEFINE_PLUGIN_ASSERT_HOOK; // Placeholder assert hook for Wwise plug-ins using AKASSERT (cassert used by default)
