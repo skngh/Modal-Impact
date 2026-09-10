@@ -41,6 +41,16 @@ AK::IAkPluginParam* CreateMetalMakerSourceParams(AK::IAkPluginMemAlloc* in_pAllo
 
 AK_IMPLEMENT_PLUGIN_FACTORY(MetalMakerSource, AkPluginTypeSource, MetalMakerConfig::CompanyID, MetalMakerConfig::PluginID)
 
+static AkUInt32 MixSeed(AkUInt32 x) // thanks stack overflow
+{
+    x ^= x >> 16;
+    x *= 0x7feb352du;
+    x ^= x >> 15;
+    x *= 0x846ca68bu;
+    x ^= x >> 16;
+    return x;
+}
+
 MetalMakerSource::MetalMakerSource()
     : m_pParams(nullptr)
     , m_pAllocator(nullptr)
@@ -62,7 +72,9 @@ AKRESULT MetalMakerSource::Init(AK::IAkPluginMemAlloc* in_pAllocator, AK::IAkSou
     
     in_rFormat.channelConfig.SetStandard(AK_SPEAKER_SETUP_MONO);
     
-    rng_state_ = in_pContext->GetVoiceInfo()->GetPlayingID() | 1u; // for randomness. makes sure it isn't 0 ever.
+    rng_state_ = MixSeed(in_pContext->GetVoiceInfo()->GetPlayingID());
+    if (rng_state_ == 0)
+        rng_state_ = 1;
     
     // init effects
     white_noise.Init();
