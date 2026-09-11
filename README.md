@@ -6,7 +6,7 @@ A Wwise instrument plugin that uses modal synthesis to create procedural audio i
 
 ## What it does
 
-_Modal Impact_ models what happens when you hit an object. A white noise burst acts as the _exciter_, which is shaped by an envelope and than fed into a bank of 15 biquad filters. I hand tuned each filter according to real samples I recorded.
+**Modal Impact** models what happens when you hit an object. A white noise burst acts as the **exciter**, which is shaped by an envelope and than fed into a bank of 15 biquad filters. I hand tuned each filter according to real samples I recorded.
 Modal Impact models what happens when you hit a physical object. A short burst of
 filtered noise stands in for the strike, and that burst excites a bank of 15 tuned
 resonators that ring out the way a real object would.

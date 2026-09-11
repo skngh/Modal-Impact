@@ -34,6 +34,20 @@ jobs:
       - name: Package Mac
         run: python3 ${{ env.WWISE_WP_MAC }} package -v ${{ env.PLUGIN_VERSION }} Mac
 
+      # Property help: converts WwisePlugin/res/Md into HTML shown in Wwise.
+      # Needs markdown + jinja2, installed into a throwaway venv because the
+      # runner's Homebrew Python is PEP 668 externally-managed.
+      - name: Set up docs toolchain
+        run: |
+          python3 -m venv .docs-venv
+          .docs-venv/bin/pip install --quiet markdown jinja2
+
+      - name: Build Documentation
+        run: .docs-venv/bin/python ${{ env.WWISE_WP_MAC }} build Documentation
+
+      - name: Package Documentation
+        run: .docs-venv/bin/python ${{ env.WWISE_WP_MAC }} package -v ${{ env.PLUGIN_VERSION }} Documentation
+
       - name: Upload Mac package
         uses: actions/upload-artifact@v7
         with:
