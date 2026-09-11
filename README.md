@@ -1,5 +1,8 @@
 # Modal Impact
 
+> [!NOTE]
+> built for Wwise 2025.1.10.9233
+
 A Wwise instrument plugin that uses modal synthesis to create procedural audio impacts.
 
 ![UI](/assets/images/UI.png)
