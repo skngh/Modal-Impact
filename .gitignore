@@ -482,11 +482,5 @@ ASALocalRun/
 
 # End of https://www.gitignore.io/api/archives,linux,xcode,macos,windows,visualstudio,premake-gmake
 
-# Property help HTML, generated from WwisePlugin/res/Md by `wp.py build Documentation`
-WwisePlugin/res/Html/
-
 # Packaged plug-in archives produced by `wp.py package`
 *.tar.xz
-
-# venv used by the Documentation build step
-.docs-venv/

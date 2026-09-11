@@ -64,15 +64,6 @@ jobs:
       - name: Package Windows runtime
         run: python ${{ env.WWISE_WP_WIN }} package -v ${{ env.PLUGIN_VERSION }} Windows_vc170
 
-      - name: Set up docs toolchain
-        run: python -m pip install --quiet markdown jinja2
-
-      - name: Build Documentation
-        run: python ${{ env.WWISE_WP_WIN }} build Documentation
-
-      - name: Package Documentation
-        run: python ${{ env.WWISE_WP_WIN }} package -v ${{ env.PLUGIN_VERSION }} Documentation
-
       - name: Upload Windows packages
         uses: actions/upload-artifact@v7
         with:

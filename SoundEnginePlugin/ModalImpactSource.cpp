@@ -189,6 +189,7 @@ void ModalImpactSource::Execute(AkAudioBuffer* out_pBuffer)
             
             float noise = lpf.Process(white_noise.Process()) * envelope.Process();
             float sig = modal_bank.Process(noise) * kPostGain * gain_smoothed_ * preset_post_gain_;
+            float clipped = sig > 1.0f ? 1.0f : sig < -1.0f ? -1.0f : sig;
             
             *pBuf++ = sig;
             ++uFramesProduced;
