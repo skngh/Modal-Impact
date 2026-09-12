@@ -33,8 +33,8 @@ the specific language governing permissions and limitations under the License.
 // - In the xml file located in the FactoryAssets directory.
 namespace ModalImpactConfig
 {
-    static const unsigned short CompanyID = 64;
-    static const unsigned short PluginID = 20572;
+  static const unsigned short CompanyID = 324;
+  static const unsigned short PluginID = 20572;
 }
 
 #endif // ModalImpactConfig_H
