@@ -46,6 +46,6 @@ Without looping on, each stage of the ADSR will be triggered sequentially.
 
 ## Installing
 
-Go to Releases and download ModalImpact-bundle-2025.x.xx.x. Then in the Wwise Launcher go to plugins -> Add from directory -> choose the unzipped version of the bundle.
+Go to Releases and download ModalImpact-2025.x.xx.x. Then in the Wwise Launcher go to plugins -> Add from directory -> choose the unzipped version of the bundle.
 
-You can ignore package-mac and package-windows. Those are the individual packages used to make the bundle, just used in the github actions workflow.
+Sometimes you may need to add the dll to your game engine project for external plug-ins to work. Not totally sure, I've had issues in the past with it with other plug-ins
